@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_project/screens/home_screen.dart';
+import 'package:my_project/screens/login_screen.dart';
 import 'package:my_project/screens/onboarding_screen.dart';
 
 void main() {
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
         // colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
       ),
-      home: const OnboardingScreen(),
+      home: const LoginScreen(),
     );
   }
 }
