@@ -16,6 +16,7 @@ class ProductDetailScreen extends StatefulWidget {
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
   int quantity = 1;
+  bool isFavorite = false;
 
   @override
   Widget build(BuildContext context) {
@@ -64,11 +65,17 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               ),
                             ),
                             IconButton(
-                              icon: const Icon(
-                                Icons.favorite_border,
-                                color: Colors.grey,
+                              icon: Icon(
+                                isFavorite
+                                    ? Icons.favorite
+                                    : Icons.favorite_border,
+                                color: isFavorite ? Colors.red : Colors.grey,
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                setState(() {
+                                  isFavorite = !isFavorite;
+                                });
+                              },
                               padding: EdgeInsets.zero,
                             ),
                           ],
@@ -118,12 +125,15 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               vertical: 2,
                             ),
                             decoration: BoxDecoration(
-                              color: Colors.grey[200],
+                              color: const Color(0xFFE2E2E2),
                               borderRadius: BorderRadius.circular(4),
                             ),
                             child: const Text(
                               '100g',
-                              style: TextStyle(fontSize: 9, color: Colors.grey),
+                              style: TextStyle(
+                                fontSize: 9,
+                                color: Color.fromARGB(255, 58, 58, 58),
+                              ),
                             ),
                           ),
                         ),

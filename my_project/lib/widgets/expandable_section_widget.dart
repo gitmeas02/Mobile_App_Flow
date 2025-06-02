@@ -31,12 +31,11 @@ class _ExpandableSectionWidgetState extends State<ExpandableSectionWidget> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      decoration: BoxDecoration(
-        border: Border.all(color: const Color(0xFFE2E2E2)),
-        borderRadius: BorderRadius.circular(0),
+      decoration: const BoxDecoration(
+        border: Border(top: BorderSide(color: Color(0xFFE2E2E2))),
       ),
       child: Material(
-        color: Colors.transparent,
+        color: const Color.fromARGB(0, 255, 36, 36),
         child: InkWell(
           onTap: () {
             setState(() {
@@ -44,7 +43,7 @@ class _ExpandableSectionWidgetState extends State<ExpandableSectionWidget> {
             });
           },
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
             child: Row(
               children: [
                 Expanded(
@@ -52,7 +51,8 @@ class _ExpandableSectionWidgetState extends State<ExpandableSectionWidget> {
                     widget.title,
                     style: const TextStyle(
                       fontSize: 16,
-                      fontWeight: FontWeight.w600,
+                      fontStyle: FontStyle.italic,
+                      fontWeight: FontWeight.w800,
                       color: Colors.black,
                     ),
                   ),
