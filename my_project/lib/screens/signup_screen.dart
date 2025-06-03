@@ -1,37 +1,39 @@
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
+  final TextEditingController usernameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool obscurePassword = true;
+
+  bool isEmailValid(String email) {
+    return RegExp(r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$").hasMatch(email);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          // Allows for scrolling on small screens
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24.0),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(height: 40),
-                Center(
-                  child: Image.asset('assets/images/plant.png', height: 150),
-                ),
+                Image.asset('assets/images/plant.png', height: 150),
+
                 const SizedBox(height: 32),
                 const Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "Loging",
+                    "Sign Up",
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -39,13 +41,30 @@ class _LoginScreenState extends State<LoginScreen> {
                 const Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "Enter your emails and password",
+                    "Enter your credentials to continue",
                     style: TextStyle(fontSize: 14, color: Colors.black54),
                   ),
                 ),
                 const SizedBox(height: 24),
 
-                // Email TextField
+                // Username Field
+                const Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Username",
+                    style: TextStyle(fontWeight: FontWeight.w500),
+                  ),
+                ),
+                const SizedBox(height: 4),
+                TextField(
+                  controller: usernameController,
+                  decoration: const InputDecoration(
+                    border: UnderlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 24),
+
+                // Email Field
                 const Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
@@ -56,14 +75,20 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(height: 4),
                 TextField(
                   controller: emailController,
-                  decoration: const InputDecoration(
-                    border: UnderlineInputBorder(),
+                  decoration: InputDecoration(
+                    border: const UnderlineInputBorder(),
+                    suffixIcon:
+                        isEmailValid(emailController.text)
+                            ? const Icon(Icons.check, color: Colors.green)
+                            : null,
                   ),
+                  onChanged: (value) {
+                    setState(() {});
+                  },
                 ),
-
                 const SizedBox(height: 24),
 
-                // Password TextField
+                // Password Field
                 const Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
@@ -92,52 +117,61 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
 
-                const SizedBox(height: 12),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                    onPressed: () {},
-                    child: const Text(
-                      "Forgot Password?",
-                      style: TextStyle(color: Colors.black87),
-                    ),
+                const SizedBox(height: 16),
+                RichText(
+                  textAlign: TextAlign.left,
+                  text: TextSpan(
+                    text: "By continuing you agree to our ",
+                    style: const TextStyle(color: Colors.black54),
+                    children: const [
+                      TextSpan(
+                        text: "Terms of Service",
+                        style: TextStyle(
+                          color: Colors.green,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      TextSpan(text: " and "),
+                      TextSpan(
+                        text: "Privacy Policy.",
+                        style: TextStyle(
+                          color: Colors.green,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
 
-                const SizedBox(height: 12),
+                const SizedBox(height: 24),
 
-                // Log In Button
+                // Sign Up Button
                 SizedBox(
                   width: double.infinity,
                   height: 50,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      // Handle signup logic
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.green,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25),
                       ),
                     ),
-                    child: const Text(
-                      "Log In",
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                    child: const Text("Sign Up"),
                   ),
                 ),
 
                 const SizedBox(height: 24),
 
-                // Signup Text
+                // Footer: Already have an account
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: const [
-                    Text("Don't have an account? "),
+                    Text("Already have an account? "),
                     Text(
-                      "Sign Up",
+                      "SignUp",
                       style: TextStyle(
                         color: Colors.green,
                         fontWeight: FontWeight.bold,
@@ -145,7 +179,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ],
                 ),
-
                 const SizedBox(height: 24),
               ],
             ),
