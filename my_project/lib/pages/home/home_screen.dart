@@ -3,10 +3,8 @@ import 'package:my_project/widgets/custom_search_bar.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
-    static route() => MaterialPageRoute(
-        builder: (context) => const HomeScreen(),
-      );
-     @override
+
+  @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
@@ -173,7 +171,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
           ],
         ),
-      ),
+      )
     );
   }
-  }
+}

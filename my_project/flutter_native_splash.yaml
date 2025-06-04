@@ -5,3 +5,13 @@ flutter_native_splash:
   android_12:
     color: "#55B675"
     image: assets/images/fullLogo.png
+# flutter_native_splash:
+#   color: "#2ecc71"
+#   image: assets/splash-android.png
+#   android: true
+#   ios: true
+#   web: false
+
+#   android_12:
+#     color: "#ffffff"
+#     image: assets/splash-android.png

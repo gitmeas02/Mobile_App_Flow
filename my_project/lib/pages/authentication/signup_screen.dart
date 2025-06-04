@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_project/pages/home/home_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -151,7 +152,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   height: 50,
                   child: ElevatedButton(
                     onPressed: () {
-                      // Handle signup logic
+                     Navigator.push(
+                       context,
+                       MaterialPageRoute(builder: (context) => const HomeScreen()),
+                     );
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.green,
