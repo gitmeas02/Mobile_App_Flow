@@ -1,16 +1,17 @@
-// lib/widgets/expandable_section_widget.dart
 import 'package:flutter/material.dart';
 
 class ExpandableSectionWidget extends StatefulWidget {
   final String title;
   final bool isExpanded;
   final Widget? trailing;
+  final Widget? expandedContent;
 
   const ExpandableSectionWidget({
     super.key,
     required this.title,
     this.isExpanded = false,
     this.trailing,
+    this.expandedContent,
   });
 
   @override
@@ -19,60 +20,73 @@ class ExpandableSectionWidget extends StatefulWidget {
 }
 
 class _ExpandableSectionWidgetState extends State<ExpandableSectionWidget> {
-  late bool isExpanded;
+  late bool _isExpanded;
 
   @override
   void initState() {
     super.initState();
-    isExpanded = widget.isExpanded;
+    _isExpanded = widget.isExpanded;
+  }
+
+  void _toggleExpanded() {
+    setState(() {
+      _isExpanded = !_isExpanded;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      decoration: const BoxDecoration(
-        border: Border(top: BorderSide(color: Color(0xFFE2E2E2))),
-      ),
-      child: Material(
-        color: const Color.fromARGB(0, 255, 36, 36),
-        child: InkWell(
-          onTap: () {
-            setState(() {
-              isExpanded = !isExpanded;
-            });
-          },
+    return Column(
+      children: [
+        Divider(color: Color.fromARGB(255, 124, 124, 124), height: 1),
+        GestureDetector(
+          onTap: _toggleExpanded,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+            padding: const EdgeInsets.symmetric(vertical: 12.0),
             child: Row(
               children: [
                 Expanded(
-                  child: Text(
-                    widget.title,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontStyle: FontStyle.italic,
-                      fontWeight: FontWeight.w800,
-                      color: Colors.black,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 5,
+                      vertical: 5,
+                    ),
+                    child: Text(
+                      widget.title,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
                     ),
                   ),
                 ),
-                if (widget.trailing != null) ...[
-                  widget.trailing!,
-                  const SizedBox(width: 10),
-                ],
-                Icon(
-                  isExpanded
-                      ? Icons.keyboard_arrow_up
-                      : Icons.keyboard_arrow_down,
-                  color: Colors.black,
-                  size: 24,
+                if (widget.trailing != null) widget.trailing!,
+                const SizedBox(width: 8),
+                AnimatedRotation(
+                  turns: _isExpanded ? 0.5 : 0.0,
+                  duration: const Duration(milliseconds: 200),
+                  child: const Icon(
+                    Icons.keyboard_arrow_down_rounded,
+                    color: Color.fromARGB(255, 0, 0, 0),
+                    size: 28,
+                  ),
                 ),
               ],
             ),
           ),
         ),
-      ),
+        AnimatedCrossFade(
+          firstChild: const SizedBox.shrink(),
+          secondChild:
+              widget.expandedContent ?? const Text('No content available.'),
+          crossFadeState:
+              _isExpanded
+                  ? CrossFadeState.showSecond
+                  : CrossFadeState.showFirst,
+          duration: const Duration(milliseconds: 200),
+        ),
+      ],
     );
   }
 }

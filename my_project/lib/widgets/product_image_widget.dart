@@ -1,10 +1,17 @@
-// lib/widgets/product_image_widget.dart
 import 'package:flutter/material.dart';
 
-class ProductImageWidget extends StatelessWidget {
-  final String imageUrl;
+class ProductImageWidget extends StatefulWidget {
+  final List<String> assetImagePaths;
 
-  const ProductImageWidget({super.key, required this.imageUrl});
+  const ProductImageWidget({super.key, required this.assetImagePaths});
+
+  @override
+  State<ProductImageWidget> createState() => _ProductImageWidgetState();
+}
+
+class _ProductImageWidgetState extends State<ProductImageWidget> {
+  int _currentPage = 0;
+  final PageController _controller = PageController();
 
   @override
   Widget build(BuildContext context) {
@@ -12,34 +19,27 @@ class ProductImageWidget extends StatelessWidget {
       height: 350,
       width: double.infinity,
       margin: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: const Color(0xFFF2F3F2),
-        borderRadius: BorderRadius.circular(25),
-      ),
       child: Stack(
         children: [
-          // Plant Image
-          Center(
-            child: Container(
-              height: 250,
-              width: 250,
-              child: Image.network(
-                imageUrl,
-                fit: BoxFit.contain,
-                errorBuilder: (context, error, stackTrace) {
-                  return Container(
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        image: NetworkImage(
-                          'https://images.unsplash.com/photo-1485955900006-10f4d324d411?w=400',
-                        ),
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
+          // Image Carousel
+          PageView.builder(
+            controller: _controller,
+            itemCount: widget.assetImagePaths.length,
+            onPageChanged: (index) {
+              setState(() => _currentPage = index);
+            },
+            itemBuilder: (context, index) {
+              return Center(
+                child: SizedBox(
+                  height: 250,
+                  width: 250,
+                  child: Image.asset(
+                    widget.assetImagePaths[index],
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              );
+            },
           ),
 
           // Page Indicator Dots
@@ -49,34 +49,18 @@ class ProductImageWidget extends StatelessWidget {
             right: 0,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: 8,
-                  height: 8,
-                  decoration: const BoxDecoration(
-                    color: Colors.green,
-                    shape: BoxShape.circle,
-                  ),
-                ),
-                const SizedBox(width: 4),
-                Container(
-                  width: 6,
-                  height: 6,
+              children: List.generate(widget.assetImagePaths.length, (index) {
+                bool isActive = index == _currentPage;
+                return Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 4),
+                  width: isActive ? 8 : 6,
+                  height: isActive ? 8 : 6,
                   decoration: BoxDecoration(
-                    color: Colors.grey[400],
+                    color: isActive ? Colors.green : Colors.grey[400],
                     shape: BoxShape.circle,
                   ),
-                ),
-                const SizedBox(width: 4),
-                Container(
-                  width: 6,
-                  height: 6,
-                  decoration: BoxDecoration(
-                    color: Colors.grey[400],
-                    shape: BoxShape.circle,
-                  ),
-                ),
-              ],
+                );
+              }),
             ),
           ),
         ],

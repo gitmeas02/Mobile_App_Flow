@@ -44,8 +44,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 children: [
                   // Product Image Section
                   const ProductImageWidget(
-                    imageUrl:
-                        'https://images.unsplash.com/photo-1485955900006-10f4d324d411?w=400',
+                    assetImagePaths: [
+                      'assets/images/plant1.png',
+                      'assets/images/plant2.png',
+                      'assets/images/plant3.png',
+                    ],
                   ),
 
                   // Product Details Section
@@ -109,9 +112,19 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         const SizedBox(height: 30),
 
                         // Expandable Sections
-                        const ExpandableSectionWidget(
+                        ExpandableSectionWidget(
                           title: 'Product Detail',
                           isExpanded: false,
+                          expandedContent: const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 10),
+                            child: Text(
+                              'This is a beautiful plant that thrives indoors and purifies the air. Water it regularly.',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.black54,
+                              ),
+                            ),
+                          ),
                         ),
 
                         const SizedBox(height: 1),
@@ -132,7 +145,17 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               '100g',
                               style: TextStyle(
                                 fontSize: 9,
-                                color: Color.fromARGB(255, 58, 58, 58),
+                                color: Color(0xFF3A3A3A),
+                              ),
+                            ),
+                          ),
+                          expandedContent: const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 10),
+                            child: Text(
+                              'Calories: 30\nProtein: 1g\nCarbs: 6g\nFat: 0g',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.black54,
                               ),
                             ),
                           ),
@@ -140,10 +163,20 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
                         const SizedBox(height: 1),
 
-                        const ExpandableSectionWidget(
+                        ExpandableSectionWidget(
                           title: 'Review',
                           isExpanded: false,
-                          trailing: RatingWidget(rating: 5),
+                          trailing: const RatingWidget(rating: 5),
+                          expandedContent: const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 10),
+                            child: Text(
+                              'Excellent plant! Looks just like the picture and is very healthy.',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.black54,
+                              ),
+                            ),
+                          ),
                         ),
                       ],
                     ),
