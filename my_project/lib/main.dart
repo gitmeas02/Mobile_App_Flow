@@ -5,6 +5,7 @@ import 'package:my_project/pages/cart/cart_page.dart';
 import 'package:my_project/pages/explore/explore_page.dart';
 import 'package:my_project/pages/favorite/favorite_page.dart';
 import 'package:my_project/pages/home/home_screen.dart';
+import 'package:my_project/routers/routers_.dart';
 import 'package:my_project/theme/colors.dart';
 import 'package:my_project/theme/theme.dart';
 
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Lesson 1',
       theme: AppTheme.defaultTheme,
       home: const MainScreen(),
+      onGenerateRoute: AppRoutes.generateRoute,
     );
   }
 }
