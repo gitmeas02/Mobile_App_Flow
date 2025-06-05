@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_project/pages/details/product_detail_page.dart';
 import 'package:my_project/pages/explore/explore_page.dart';
 // import 'package:my_project/pages/product_detail/product_detail_page.dart';
 // import 'package:my_project/pages/categories/categories_list_page.dart';
@@ -35,7 +36,7 @@ class AppRoutes {
       case explore:
         return MaterialPageRoute(builder: (_) => const ExplorePage());
       case productDetail:
-        // return MaterialPageRoute(builder: (_) => const ProductDetailPage());
+        return MaterialPageRoute(builder: (_) => const ProductDetailPage());
       case categoriesList:
         // return MaterialPageRoute(builder: (_) => const CategoriesListPage());
       case cart:

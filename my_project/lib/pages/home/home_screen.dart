@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_project/pages/details/product_detail_page.dart';
 import 'package:my_project/widgets/custom_search_bar.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -127,6 +128,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: EdgeInsets.all(16),
                   child: Text('Continue more here'),
                 ),
+                ElevatedButton(
+                  onPressed: (){
+                    Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const ProductDetailPage()),
+              );
+                },
+                 child: Text("detail page"))
               ],
             ),
 

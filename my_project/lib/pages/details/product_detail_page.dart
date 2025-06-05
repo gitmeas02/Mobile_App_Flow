@@ -6,14 +6,14 @@ import 'package:my_project/widgets/product_info_widget.dart';
 import 'package:my_project/widgets/quantity_selector_widget.dart';
 import 'package:my_project/widgets/rating_widget.dart';
 
-class ProductDetailScreen extends StatefulWidget {
-  const ProductDetailScreen({super.key});
+class ProductDetailPage extends StatefulWidget {
+  const ProductDetailPage({super.key});
 
   @override
-  State<ProductDetailScreen> createState() => _ProductDetailScreenState();
+  State<ProductDetailPage> createState() => _ProductDetailPageState();
 }
 
-class _ProductDetailScreenState extends State<ProductDetailScreen> {
+class _ProductDetailPageState extends State<ProductDetailPage> {
   int quantity = 1;
   bool isFavorite = false;
 

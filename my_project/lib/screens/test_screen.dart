@@ -21,7 +21,7 @@ class TestScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const ProductDetailScreen(),
+                  builder: (context) => const ProductDetailPage(),
                 ),
               );
             },
