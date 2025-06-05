@@ -1,6 +1,6 @@
 // lib/screens/test_screen.dart
 import 'package:flutter/material.dart';
-import '../pages/details/product_detail_screen.dart';
+import 'package:my_project/pages/details/product_detail_page.dart';
 
 class TestScreen extends StatelessWidget {
   const TestScreen({super.key});

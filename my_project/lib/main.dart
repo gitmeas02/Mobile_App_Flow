@@ -1,14 +1,17 @@
+// import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:my_project/pages/account/account_page.dart';
 import 'package:my_project/pages/cart/cart_page.dart';
+import 'package:my_project/pages/details/product_detail_page.dart';
+// import 'package:my_project/pages/details/product_detail_page.dart';
 import 'package:my_project/pages/explore/explore_page.dart';
 import 'package:my_project/pages/favorite/favorite_page.dart';
 import 'package:my_project/pages/home/home_screen.dart';
 import 'package:my_project/routers/routers_.dart';
 import 'package:my_project/theme/colors.dart';
 import 'package:my_project/theme/theme.dart';
-
+// import 'package:my_project/pages/details/product_detail_screen.dart';
 void main() {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
@@ -24,7 +27,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Lesson 1',
       theme: AppTheme.defaultTheme,
-      home: const MainScreen(),
+      home:  MainScreen(),
       onGenerateRoute: AppRoutes.generateRoute,
     );
   }
