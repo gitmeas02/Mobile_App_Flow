@@ -27,17 +27,19 @@ class _SplashScreenState extends State<SplashScreen> {
 
     FlutterNativeSplash.remove();
 
-    if (hasSeenOnboarding) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => const  OnboardingScreen()),
-      );
-    } else {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => const MainScreen()),
-      );
-    }
+   if (!hasSeenOnboarding) {
+  // Show onboarding only once
+  Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(builder: (_) => const OnboardingScreen()),
+  );
+} else {
+  Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(builder: (_) => const MainScreen()),
+  );
+}
+
   }
 
   @override
