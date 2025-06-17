@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_project/features/home/presentation/widgets/carousel_banner.dart';
 import '../../../../core/widgets/inputs/custom_search_bar.dart';
 import '../../../../core/routes/app_routes.dart';
 
@@ -123,6 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   onFilterTap: _onFilterTap,
                 ),
                 const SizedBox(height: 30),
+                Expanded(child: CarouselBanner()),
                 const Padding(
                   padding: EdgeInsets.all(16),
                   child: Text('Continue more here'),
