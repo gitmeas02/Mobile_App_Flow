@@ -1,17 +1,14 @@
 flutter_native_splash:
-  color: "#55B675"
-  image: assets/images/fullLogo.png
+  color: "#53B175"
+  # Remove image since we'll use custom splash for complex layout
 
   android_12:
-    color: "#55B675"
-    image: assets/images/fullLogo.png
-# flutter_native_splash:
-#   color: "#2ecc71"
-#   image: assets/splash-android.png
-#   android: true
-#   ios: true
-#   web: false
+    color: "#53B175"
 
-#   android_12:
-#     color: "#ffffff"
-#     image: assets/splash-android.png
+  # Performance optimizations
+  android: true
+  ios: true
+  web: true
+
+  # Fullscreen for better performance
+  fullscreen: true
