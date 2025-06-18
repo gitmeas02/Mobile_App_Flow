@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:my_project/features/home/presentation/pages/home_screen.dart';
+import 'package:my_project/pages/authentication/presentation/pages/initial_login_screen.dart';
+import 'package:my_project/pages/authentication/presentation/pages/login_screen.dart';
+import 'package:my_project/pages/authentication/presentation/pages/signup_screen.dart';
 
 // Import from features (we'll create these next)
 import '../../features/splash/presentation/pages/splash_screen.dart';
@@ -27,13 +31,20 @@ class AppRoutes {
   static const String promotionCode = '/promotion-code';
   static const String paymentMethod = '/payment-method';
   static const String myPersonalDetails = '/my-personal-details';
-
+  static const String InitialScreen = '/initial-screen';
+  static const String Login ='/login';
+  static const String Register ='/Register';
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case splash:
         return MaterialPageRoute(builder: (_) => const SplashScreen());
+      case InitialScreen:
+      return MaterialPageRoute(builder: (_) => const InitialLoginScreen());
       case onboarding:
-        return MaterialPageRoute(builder: (_) => const OnboardingScreen());
+       case Login:
+      return MaterialPageRoute(builder: (_) => const LoginScreen());
+      case Register:
+        return MaterialPageRoute(builder: (_) => const SignUpScreen());
       case home:
         return MaterialPageRoute(builder: (_) => const MainScreen());
       case explore:
