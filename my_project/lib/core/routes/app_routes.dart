@@ -30,17 +30,17 @@ class AppRoutes {
   static const String paymentMethod = '/payment-method';
   static const String myPersonalDetails = '/my-personal-details';
   static const String InitialScreen = '/initial-screen';
-  static const String Login ='/login';
-  static const String Register ='/Register';
+  static const String Login = '/login';
+  static const String Register = '/Register';
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case splash:
         return MaterialPageRoute(builder: (_) => const SplashScreen());
       case InitialScreen:
-      return MaterialPageRoute(builder: (_) => const InitialLoginScreen());
+        return MaterialPageRoute(builder: (_) => const InitialLoginScreen());
       case onboarding:
-       case Login:
-      return MaterialPageRoute(builder: (_) => const LoginScreen());
+      case Login:
+        return MaterialPageRoute(builder: (_) => const LoginScreen());
       case Register:
         return MaterialPageRoute(builder: (_) => const SignUpScreen());
       case home:
