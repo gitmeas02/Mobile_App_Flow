@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:my_project/core/utils/button/titleView.dart';
+import 'package:my_project/core/widgets/inputs/custom_search_bar.dart';
 import 'package:my_project/features/home/presentation/widgets/carousel_banner.dart';
-import '../../../../core/widgets/inputs/custom_search_bar.dart';
-import '../../../../core/routes/app_routes.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -64,6 +64,57 @@ class _HomeScreenState extends State<HomeScreen> {
     ).showSnackBar(const SnackBar(content: Text("Filter Tapped!")));
   }
 
+  Widget _buildOfferCard(String title, String subtitle, Color color) {
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: color.withOpacity(0.1),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: color,
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(subtitle, style: TextStyle(fontSize: 14, color: color)),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildProductCard(String title, String price) {
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              price,
+              style: const TextStyle(fontSize: 14, color: Colors.green),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -116,28 +167,53 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         body: Stack(
           children: [
-            Column(
-              children: [
-                CustomSearchBar(
-                  controller: _searchController,
-                  focusNode: _searchFocusNode,
-                  onFilterTap: _onFilterTap,
-                ),
-                const SizedBox(height: 30),
-                Expanded(child: CarouselBanner()),
-                const Padding(
-                  padding: EdgeInsets.all(16),
-                  child: Text('Continue more here'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, AppRoutes.productDetail);
-                  },
-                  child: const Text("Detail Page"),
-                ),
-              ],
-            ),
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  CustomSearchBar(
+                    controller: _searchController,
+                    focusNode: _searchFocusNode,
+                    onFilterTap: _onFilterTap,
+                  ),
+                  const SizedBox(height: 30),
+                  const CarouselBanner(),
 
+                  // Exclusive Offer section
+                  Titleview(
+                    title: "Exclusive Offer",
+                    onSeeAllTap: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("See all Exclusive Offers"),
+                        ),
+                      );
+                    },
+                  ),
+
+                  // Featured Products section
+                  Titleview(
+                    title: "Best Selling",
+                    onSeeAllTap: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("See all best selling Products"),
+                        ),
+                      );
+                    },
+                  ),
+
+                  // Best Selling section
+                  Titleview(
+                    title: "Categories",
+                    onSeeAllTap: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text("See all Categories")),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
             if (_isSearchFocused)
               Positioned(
                 top: 70,
