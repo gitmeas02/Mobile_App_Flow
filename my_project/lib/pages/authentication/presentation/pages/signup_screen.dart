@@ -36,7 +36,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   alignment: Alignment.centerLeft,
                   child: Text(
                     "Sign Up",
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -54,11 +58,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   alignment: Alignment.centerLeft,
                   child: Text(
                     "Username",
-                    style: TextStyle(fontWeight: FontWeight.w500),
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xFF7C7C7C),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 4),
                 TextField(
+                  style: TextStyle(color: Colors.black),
                   controller: usernameController,
                   decoration: const InputDecoration(
                     border: UnderlineInputBorder(),
@@ -71,11 +79,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   alignment: Alignment.centerLeft,
                   child: Text(
                     "Email",
-                    style: TextStyle(fontWeight: FontWeight.w500),
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xFF7C7C7C),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 4),
                 TextField(
+                  style: TextStyle(color: Colors.black),
                   controller: emailController,
                   decoration: InputDecoration(
                     border: const UnderlineInputBorder(),
@@ -95,11 +107,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   alignment: Alignment.centerLeft,
                   child: Text(
                     "Password",
-                    style: TextStyle(fontWeight: FontWeight.w500),
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xFF7C7C7C),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 4),
                 TextField(
+                  style: TextStyle(color: Colors.black),
                   controller: passwordController,
                   obscureText: obscurePassword,
                   decoration: InputDecoration(
@@ -153,10 +169,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   height: 50,
                   child: ElevatedButton(
                     onPressed: () {
-                     Navigator.push(
-                       context,
-                       MaterialPageRoute(builder: (context) => const LoginScreen()),
-                     );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const LoginScreen(),
+                        ),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.green,
@@ -171,10 +189,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 const SizedBox(height: 24),
 
                 // Footer: Already have an account
-                 Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("Don't have an account? "),
+                    const Text(
+                      "Already have an Account? ",
+                      style: TextStyle(color: Colors.black),
+                    ),
                     TextButton(
                       onPressed: () {
                         Navigator.of(context).pushNamed(AppRoutes.Login);

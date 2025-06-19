@@ -32,8 +32,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 const Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "Loging",
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    "Log In",
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -51,11 +55,15 @@ class _LoginScreenState extends State<LoginScreen> {
                   alignment: Alignment.centerLeft,
                   child: Text(
                     "Email",
-                    style: TextStyle(fontWeight: FontWeight.w500),
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xFF7C7C7C),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 4),
                 TextField(
+                  style: TextStyle(color: Colors.black),
                   controller: emailController,
                   decoration: const InputDecoration(
                     border: UnderlineInputBorder(),
@@ -69,11 +77,15 @@ class _LoginScreenState extends State<LoginScreen> {
                   alignment: Alignment.centerLeft,
                   child: Text(
                     "Password",
-                    style: TextStyle(fontWeight: FontWeight.w500),
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xFF7C7C7C),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 4),
                 TextField(
+                  style: TextStyle(color: Colors.black),
                   controller: passwordController,
                   obscureText: obscurePassword,
                   decoration: InputDecoration(
@@ -138,7 +150,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("Don't have an account? "),
+                    const Text(
+                      "Don't have an account? ",
+                      style: TextStyle(color: Colors.black),
+                    ),
                     TextButton(
                       onPressed: () {
                         Navigator.of(context).pushNamed(AppRoutes.Register);
