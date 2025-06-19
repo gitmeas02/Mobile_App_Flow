@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:my_project/core/routes/app_routes.dart';
+import 'package:my_project/pages/authentication/presentation/pages/auth_service.dart';
 import 'package:my_project/pages/authentication/presentation/pages/login_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -14,9 +16,72 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool obscurePassword = true;
+  bool isLoading = false;
 
   bool isEmailValid(String email) {
     return RegExp(r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$").hasMatch(email);
+  }
+
+  @override
+  void dispose() {
+    usernameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _signUp() async {
+    final username = usernameController.text.trim();
+    final email = emailController.text.trim();
+    final password = passwordController.text;
+
+    if (username.isEmpty || email.isEmpty || password.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please fill in all fields')),
+      );
+      return;
+    }
+
+    if (!isEmailValid(email)) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Invalid email format')));
+      return;
+    }
+
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      // Create user account
+      await authService.value.createAccount(email: email, password: password);
+
+      // Update display name (username)
+      await authService.value.updateUsername(username: username);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Account created successfully!')),
+      );
+
+      // Navigate to Login screen or home
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const LoginScreen()),
+      );
+    } catch (e) {
+      String errorMessage = 'An error occurred. Please try again.';
+      if (e is FirebaseAuthException) {
+        errorMessage = e.message ?? errorMessage;
+      }
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(errorMessage)));
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 
   @override
@@ -30,7 +95,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
               children: [
                 const SizedBox(height: 40),
                 Image.asset('assets/images/plant.png', height: 150),
-
                 const SizedBox(height: 32),
                 const Align(
                   alignment: Alignment.centerLeft,
@@ -66,7 +130,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 const SizedBox(height: 4),
                 TextField(
-                  style: TextStyle(color: Colors.black),
+                  style: const TextStyle(color: Colors.black),
                   controller: usernameController,
                   decoration: const InputDecoration(
                     border: UnderlineInputBorder(),
@@ -87,7 +151,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 const SizedBox(height: 4),
                 TextField(
-                  style: TextStyle(color: Colors.black),
+                  style: const TextStyle(color: Colors.black),
                   controller: emailController,
                   decoration: InputDecoration(
                     border: const UnderlineInputBorder(),
@@ -115,7 +179,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 const SizedBox(height: 4),
                 TextField(
-                  style: TextStyle(color: Colors.black),
+                  style: const TextStyle(color: Colors.black),
                   controller: passwordController,
                   obscureText: obscurePassword,
                   decoration: InputDecoration(
@@ -140,8 +204,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   textAlign: TextAlign.left,
                   text: TextSpan(
                     text: "By continuing you agree to our ",
-                    style: const TextStyle(color: Colors.black54),
-                    children: const [
+                    style: TextStyle(color: Colors.black54),
+                    children: [
                       TextSpan(
                         text: "Terms of Service",
                         style: TextStyle(
@@ -168,21 +232,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   width: double.infinity,
                   height: 50,
                   child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const LoginScreen(),
-                        ),
-                      );
-                    },
+                    onPressed: isLoading ? null : _signUp,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.green,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25),
                       ),
                     ),
-                    child: const Text("Sign Up"),
+                    child:
+                        isLoading
+                            ? const CircularProgressIndicator(
+                              color: Colors.white,
+                            )
+                            : const Text("Sign Up"),
                   ),
                 ),
 

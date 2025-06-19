@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:my_project/core/routes/app_routes.dart';
+import 'package:my_project/pages/authentication/presentation/pages/auth_service.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -12,6 +14,55 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool obscurePassword = true;
+  bool isLoading = false;
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _signIn() async {
+    final email = emailController.text.trim();
+    final password = passwordController.text;
+
+    if (email.isEmpty || password.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please enter email and password')),
+      );
+      return;
+    }
+
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      // Call your AuthService signIn method
+      await authService.value.signIn(email: email, password: password);
+
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Logged in successfully!')));
+
+      // Navigate to home screen
+      Navigator.of(context).pushReplacementNamed(AppRoutes.home);
+    } on FirebaseAuthException catch (e) {
+      String message = e.message ?? 'Login failed. Please try again.';
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(message)));
+    } catch (e) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('An error occurred: $e')));
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 const Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "Enter your emails and password",
+                    "Enter your email and password",
                     style: TextStyle(fontSize: 14, color: Colors.black54),
                   ),
                 ),
@@ -63,11 +114,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 4),
                 TextField(
-                  style: TextStyle(color: Colors.black),
+                  style: const TextStyle(color: Colors.black),
                   controller: emailController,
                   decoration: const InputDecoration(
                     border: UnderlineInputBorder(),
                   ),
+                  keyboardType: TextInputType.emailAddress,
                 ),
 
                 const SizedBox(height: 24),
@@ -85,7 +137,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 4),
                 TextField(
-                  style: TextStyle(color: Colors.black),
+                  style: const TextStyle(color: Colors.black),
                   controller: passwordController,
                   obscureText: obscurePassword,
                   decoration: InputDecoration(
@@ -109,7 +161,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 Align(
                   alignment: Alignment.centerRight,
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      // TODO: Implement password reset flow
+                    },
                     child: const Text(
                       "Forgot Password?",
                       style: TextStyle(color: Colors.black87),
@@ -124,23 +178,26 @@ class _LoginScreenState extends State<LoginScreen> {
                   width: double.infinity,
                   height: 50,
                   child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pushNamed(AppRoutes.home);
-                    },
+                    onPressed: isLoading ? null : _signIn,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.green,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25),
                       ),
                     ),
-                    child: const Text(
-                      "Log In",
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                    child:
+                        isLoading
+                            ? const CircularProgressIndicator(
+                              color: Colors.white,
+                            )
+                            : const Text(
+                              "Log In",
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                   ),
                 ),
 
