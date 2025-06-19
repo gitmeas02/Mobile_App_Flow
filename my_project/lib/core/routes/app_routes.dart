@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_project/pages/authentication/presentation/pages/initial_login_screen.dart';
 import 'package:my_project/pages/authentication/presentation/pages/login_screen.dart';
 import 'package:my_project/pages/authentication/presentation/pages/signup_screen.dart';
+import 'package:my_project/pages/authentication/presentation/pages/forgot_password_screen.dart';
 
 // Import from features (we'll create these next)
 import '../../features/splash/presentation/pages/splash_screen.dart';
@@ -32,6 +33,8 @@ class AppRoutes {
   static const String InitialScreen = '/initial-screen';
   static const String Login = '/login';
   static const String Register = '/Register';
+  static const String forgotPassword = '/forgot-password';
+
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case splash:
@@ -53,6 +56,8 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => const CartPage());
       case favorite:
         return MaterialPageRoute(builder: (_) => const FavoritePage());
+      case forgotPassword:
+        return MaterialPageRoute(builder: (_) => const ForgotPasswordScreen());
       // TODO: Implement remaining routes as we move pages to features
       default:
         return MaterialPageRoute(
