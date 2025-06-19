@@ -35,4 +35,32 @@ List<CartItem> cartItems = [
     image: 'assets/images/plant1.png',
     capacities: 3,
   ),
+    CartItem(
+    price: 15.00,
+    name: 'Orange',
+    descriptions: 'Juicy orange',
+    image: 'assets/images/plant1.png',
+    capacities: 3,
+  ),
+    CartItem(
+    price: 15.00,
+    name: 'Orange',
+    descriptions: 'Juicy orange',
+    image: 'assets/images/plant1.png',
+    capacities: 3,
+  ),
+    CartItem(
+    price: 15.00,
+    name: 'Orange',
+    descriptions: 'Juicy orange',
+    image: 'assets/images/plant1.png',
+    capacities: 3,
+  ),
+    CartItem(
+    price: 15.00,
+    name: 'Orange',
+    descriptions: 'Juicy orange',
+    image: 'assets/images/plant1.png',
+    capacities: 3,
+  ),
 ];
