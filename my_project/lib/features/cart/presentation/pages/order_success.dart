@@ -31,17 +31,25 @@ class OrderSuccess extends StatelessWidget {
         child: SafeArea(
           child: Column(
             children: [
-              const SizedBox(height: 80),
+              const SizedBox(height: 50),
               // Static logo image (replace with your asset path if needed)
               Center(
-                child: Image.asset(
-                  'assets/images/successlogo2.png', // Place your image here
-                  width: 350,
-                  height: 350,
-                  fit: BoxFit.contain,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(
+                    16.0,
+                    16.0,
+                    40.0,
+                    8.0,
+                  ), // adjust as needed
+                  child: Image.asset(
+                    'assets/images/successlogo2.png',
+                    width: 300,
+                    height: 300,
+                    fit: BoxFit.contain,
+                  ),
                 ),
               ),
-              const SizedBox(height: 32),
+              const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 32.0),
                 child: Column(
@@ -66,7 +74,7 @@ class OrderSuccess extends StatelessWidget {
                         color: Color(0xFF757575),
                       ),
                     ),
-                    const SizedBox(height: 170),
+                    const SizedBox(height: 80),
                     SizedBox(
                       width: double.infinity,
                       height: 64,
