@@ -133,21 +133,6 @@ class _FilterBottomSheetState extends State<FilterBottomSheet>
                           padding: EdgeInsets.only(
                             top: MediaQuery.of(context).padding.top,
                           ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  Icon(Icons.signal_cellular_4_bar, size: 16),
-                                  SizedBox(width: 4),
-                                  Icon(Icons.wifi, size: 16),
-                                  SizedBox(width: 4),
-                                  Icon(Icons.battery_full, size: 16),
-                                  SizedBox(width: 16),
-                                ],
-                              ),
-                            ],
-                          ),
                         ),
                         // Header
                         FilterHeader(onClose: _closeFilter),
