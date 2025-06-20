@@ -246,25 +246,25 @@ class _HomeScreenState extends State<HomeScreen> {
                     child:
                         _filteredItems.isNotEmpty
                             ? ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: _filteredItems.length,
-                                itemBuilder: (context, index) {
-                                  return ListTile(
-                                    title: Text(_filteredItems[index]),
-                                    onTap: () {
-                                      setState(() {
-                                        _searchController.text =
-                                            _filteredItems[index];
-                                        _searchFocusNode.unfocus();
-                                      });
-                                    },
-                                  );
-                                },
-                              )
+                              shrinkWrap: true,
+                              itemCount: _filteredItems.length,
+                              itemBuilder: (context, index) {
+                                return ListTile(
+                                  title: Text(_filteredItems[index]),
+                                  onTap: () {
+                                    setState(() {
+                                      _searchController.text =
+                                          _filteredItems[index];
+                                      _searchFocusNode.unfocus();
+                                    });
+                                  },
+                                );
+                              },
+                            )
                             : const Padding(
-                                padding: EdgeInsets.all(16),
-                                child: Text("No result found"),
-                              ),
+                              padding: EdgeInsets.all(16),
+                              child: Text("No result found"),
+                            ),
                   ),
                 ),
               ),

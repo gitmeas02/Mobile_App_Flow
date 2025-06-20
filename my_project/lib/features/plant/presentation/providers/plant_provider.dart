@@ -100,13 +100,13 @@ class PlantProvider with ChangeNotifier {
     try {
       final startIndex = _plants.length;
       final endIndex = (startIndex + 6).clamp(0, _allPlants.length);
-      
+
       if (startIndex >= _allPlants.length) {
         _hasMoreData = false;
       } else {
         final newPlants = _allPlants.sublist(startIndex, endIndex);
         _plants.addAll(newPlants);
-        
+
         if (_plants.length >= _allPlants.length) {
           _hasMoreData = false;
         }
@@ -131,11 +131,12 @@ class PlantProvider with ChangeNotifier {
     await Future.delayed(const Duration(milliseconds: 300));
 
     try {
-      final searchResults = _allPlants.where((plant) {
-        return plant.name.toLowerCase().contains(query.toLowerCase()) ||
-               plant.description.toLowerCase().contains(query.toLowerCase());
-      }).toList();
-      
+      final searchResults =
+          _allPlants.where((plant) {
+            return plant.name.toLowerCase().contains(query.toLowerCase()) ||
+                plant.description.toLowerCase().contains(query.toLowerCase());
+          }).toList();
+
       _plants = searchResults;
       _hasMoreData = false; // No pagination for search results
     } catch (e) {
