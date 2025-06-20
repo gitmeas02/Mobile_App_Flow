@@ -28,18 +28,19 @@ class _CarouselBannerState extends State<CarouselBanner> {
             alignment: Alignment.bottomCenter,
             children: [
               CarouselSlider(
-                items: imageUrls.map((url) {
-                  return Container(
-                    margin: EdgeInsets.all(6.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.0),
-                      image: DecorationImage(
-                        image: NetworkImage(url),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  );
-                }).toList(),
+                items:
+                    imageUrls.map((url) {
+                      return Container(
+                        margin: EdgeInsets.all(6.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8.0),
+                          image: DecorationImage(
+                            image: NetworkImage(url),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      );
+                    }).toList(),
                 options: CarouselOptions(
                   height: 180.0,
                   enlargeCenterPage: true,
@@ -61,19 +62,21 @@ class _CarouselBannerState extends State<CarouselBanner> {
                 bottom: 10,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: imageUrls.asMap().entries.map((entry) {
-                    return Container(
-                      width: 8.0,
-                      height: 8.0,
-                      margin: EdgeInsets.symmetric(horizontal: 4.0),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: _current == entry.key
-                            ? const Color.fromARGB(255, 23, 134, 75)
-                            : Colors.white.withOpacity(0.4),
-                      ),
-                    );
-                  }).toList(),
+                  children:
+                      imageUrls.asMap().entries.map((entry) {
+                        return Container(
+                          width: 8.0,
+                          height: 8.0,
+                          margin: EdgeInsets.symmetric(horizontal: 4.0),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color:
+                                _current == entry.key
+                                    ? const Color.fromARGB(255, 23, 134, 75)
+                                    : Colors.white.withOpacity(0.4),
+                          ),
+                        );
+                      }).toList(),
                 ),
               ),
             ],
