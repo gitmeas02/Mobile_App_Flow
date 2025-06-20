@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_project/features/cart/presentation/pages/order_success.dart';
 import 'package:my_project/pages/authentication/presentation/pages/initial_login_screen.dart';
 import 'package:my_project/pages/authentication/presentation/pages/login_screen.dart';
 import 'package:my_project/pages/authentication/presentation/pages/signup_screen.dart';
@@ -32,6 +33,7 @@ class AppRoutes {
   static const String InitialScreen = '/initial-screen';
   static const String Login = '/login';
   static const String Register = '/Register';
+  static const String ordersuccess = '/order-success';
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case splash:
@@ -53,6 +55,8 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => const CartPage());
       case favorite:
         return MaterialPageRoute(builder: (_) => const FavoritePage());
+      case ordersuccess:
+        return MaterialPageRoute(builder: (_) => const OrderSuccess());
       // TODO: Implement remaining routes as we move pages to features
       default:
         return MaterialPageRoute(
