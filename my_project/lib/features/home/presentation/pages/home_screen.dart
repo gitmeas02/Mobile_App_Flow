@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:my_project/core/utils/button/titleView.dart';
 import 'package:my_project/core/widgets/inputs/custom_search_bar.dart';
 import 'package:my_project/features/home/presentation/widgets/carousel_banner.dart';
+import 'package:my_project/features/plant/presentation/plant_card.dart';
+import 'package:my_project/features/plant/presentation/plant_grid_card.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -63,8 +65,6 @@ class _HomeScreenState extends State<HomeScreen> {
       context,
     ).showSnackBar(const SnackBar(content: Text("Filter Tapped!")));
   }
-
- 
 
   @override
   Widget build(BuildContext context) {
@@ -139,6 +139,41 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       );
                     },
+                  ),
+                  PlantGridCard(
+                    plants: [
+                      Plant(
+                        name: "Monstera",
+                        description: "Indoor plant",
+                        price: 24.99,
+                        imagePath: "assets/images/plant1.png",
+                      ),
+                      Plant(
+                        name: "Snake Plant",
+                        description: "Low maintenance",
+                        price: 19.99,
+                        imagePath: "assets/images/plant2.png",
+                      ),
+                      Plant(
+                        name: "Snake Plant",
+                        description: "Low maintenance",
+                        price: 19.99,
+                        imagePath: "assets/images/plant2.png",
+                      ),
+                      Plant(
+                        name: "Snake Plant",
+                        description: "Low maintenance",
+                        price: 19.99,
+                        imagePath: "assets/images/plant2.png",
+                      ),
+                      Plant(
+                        name: "Snake Plant",
+                        description: "Low maintenance",
+                        price: 19.99,
+                        imagePath: "assets/images/plant2.png",
+                      ),
+                      // ... more plants
+                    ],
                   ),
 
                   // Featured Products section
