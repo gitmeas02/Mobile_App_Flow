@@ -226,6 +226,34 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     },
                   ),
+                  PlantGridCard(
+                    plants: [
+                      Plant(
+                        name: "Fiddle Leaf Fig",
+                        description: "Statement plant",
+                        price: 45.99,
+                        imagePath: "assets/images/plant1.png",
+                      ),
+                      Plant(
+                        name: "Rubber Plant",
+                        description: "Easy care",
+                        price: 32.99,
+                        imagePath: "assets/images/plant2.png",
+                      ),
+                      Plant(
+                        name: "Pothos",
+                        description: "Trailing vine",
+                        price: 18.99,
+                        imagePath: "assets/images/plant3.png",
+                      ),
+                      Plant(
+                        name: "ZZ Plant",
+                        description: "Low light plant",
+                        price: 28.99,
+                        imagePath: "assets/images/plant1.png",
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
