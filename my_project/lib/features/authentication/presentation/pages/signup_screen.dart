@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_project/core/routes/app_routes.dart';
-import 'package:my_project/pages/authentication/presentation/pages/login_screen.dart';
+import 'package:my_project/features/authentication/presentation/pages/login_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});

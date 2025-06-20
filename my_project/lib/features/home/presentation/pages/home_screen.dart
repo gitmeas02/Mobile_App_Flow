@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_project/core/utils/button/titleView.dart';
 import 'package:my_project/core/widgets/inputs/custom_search_bar.dart';
 import 'package:my_project/features/home/presentation/widgets/carousel_banner.dart';
-import 'package:my_project/features/plant/presentation/plant_card.dart';
-import 'package:my_project/features/plant/presentation/plant_grid_card.dart';
+import 'package:my_project/features/plant/presentation/widgets/plant_grid_card.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -189,6 +188,36 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
 
                   // Best Selling section
+                  PlantGridCard(
+                    plants: [
+                      Plant(
+                        name: "Fiddle Leaf Fig",
+                        description: "Statement plant",
+                        price: 45.99,
+                        imagePath: "assets/images/plant1.png",
+                      ),
+                      Plant(
+                        name: "Rubber Plant",
+                        description: "Easy care",
+                        price: 32.99,
+                        imagePath: "assets/images/plant2.png",
+                      ),
+                      Plant(
+                        name: "Pothos",
+                        description: "Trailing vine",
+                        price: 18.99,
+                        imagePath: "assets/images/plant3.png",
+                      ),
+                      Plant(
+                        name: "ZZ Plant",
+                        description: "Low light plant",
+                        price: 28.99,
+                        imagePath: "assets/images/plant1.png",
+                      ),
+                    ],
+                  ),
+
+                  // Categories section
                   Titleview(
                     title: "Categories",
                     onSeeAllTap: () {
@@ -217,25 +246,25 @@ class _HomeScreenState extends State<HomeScreen> {
                     child:
                         _filteredItems.isNotEmpty
                             ? ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: _filteredItems.length,
-                              itemBuilder: (context, index) {
-                                return ListTile(
-                                  title: Text(_filteredItems[index]),
-                                  onTap: () {
-                                    setState(() {
-                                      _searchController.text =
-                                          _filteredItems[index];
-                                      _searchFocusNode.unfocus();
-                                    });
-                                  },
-                                );
-                              },
-                            )
+                                shrinkWrap: true,
+                                itemCount: _filteredItems.length,
+                                itemBuilder: (context, index) {
+                                  return ListTile(
+                                    title: Text(_filteredItems[index]),
+                                    onTap: () {
+                                      setState(() {
+                                        _searchController.text =
+                                            _filteredItems[index];
+                                        _searchFocusNode.unfocus();
+                                      });
+                                    },
+                                  );
+                                },
+                              )
                             : const Padding(
-                              padding: EdgeInsets.all(16),
-                              child: Text("No result found"),
-                            ),
+                                padding: EdgeInsets.all(16),
+                                child: Text("No result found"),
+                              ),
                   ),
                 ),
               ),

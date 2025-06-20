@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:my_project/pages/authentication/presentation/pages/initial_login_screen.dart';
-import 'package:my_project/pages/authentication/presentation/pages/login_screen.dart';
-import 'package:my_project/pages/authentication/presentation/pages/signup_screen.dart';
+import 'package:my_project/features/authentication/presentation/pages/initial_login_screen.dart';
+import 'package:my_project/features/authentication/presentation/pages/login_screen.dart';
+import 'package:my_project/features/authentication/presentation/pages/signup_screen.dart';
 
 // Import from features (we'll create these next)
 import '../../features/splash/presentation/pages/splash_screen.dart';
