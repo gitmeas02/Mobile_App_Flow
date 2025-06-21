@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:my_project/core/utils/button/titleView.dart';
+import 'package:my_project/core/widgets/inputs/custom_search_bar.dart';
 import 'package:my_project/features/home/presentation/widgets/carousel_banner.dart';
-import '../../../../core/widgets/inputs/custom_search_bar.dart';
-import '../../../../core/routes/app_routes.dart';
+import 'package:my_project/features/plant/presentation/widgets/plant_grid_card.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -116,28 +117,146 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         body: Stack(
           children: [
-            Column(
-              children: [
-                CustomSearchBar(
-                  controller: _searchController,
-                  focusNode: _searchFocusNode,
-                  onFilterTap: _onFilterTap,
-                ),
-                const SizedBox(height: 30),
-                Expanded(child: CarouselBanner()),
-                const Padding(
-                  padding: EdgeInsets.all(16),
-                  child: Text('Continue more here'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, AppRoutes.productDetail);
-                  },
-                  child: const Text("Detail Page"),
-                ),
-              ],
-            ),
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  CustomSearchBar(
+                    controller: _searchController,
+                    focusNode: _searchFocusNode,
+                    onFilterTap: _onFilterTap,
+                  ),
+                  const SizedBox(height: 30),
+                  const CarouselBanner(),
 
+                  // Exclusive Offer section
+                  Titleview(
+                    title: "Exclusive Offer",
+                    onSeeAllTap: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("See all Exclusive Offers"),
+                        ),
+                      );
+                    },
+                  ),
+                  PlantGridCard(
+                    plants: [
+                      Plant(
+                        name: "Monstera",
+                        description: "Indoor plant",
+                        price: 24.99,
+                        imagePath: "assets/images/plant1.png",
+                      ),
+                      Plant(
+                        name: "Snake Plant",
+                        description: "Low maintenance",
+                        price: 19.99,
+                        imagePath: "assets/images/plant2.png",
+                      ),
+                      Plant(
+                        name: "Snake Plant",
+                        description: "Low maintenance",
+                        price: 19.99,
+                        imagePath: "assets/images/plant2.png",
+                      ),
+                      Plant(
+                        name: "Snake Plant",
+                        description: "Low maintenance",
+                        price: 19.99,
+                        imagePath: "assets/images/plant2.png",
+                      ),
+                      Plant(
+                        name: "Snake Plant",
+                        description: "Low maintenance",
+                        price: 19.99,
+                        imagePath: "assets/images/plant2.png",
+                      ),
+                      // ... more plants
+                    ],
+                  ),
+
+                  // Featured Products section
+                  Titleview(
+                    title: "Best Selling",
+                    onSeeAllTap: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("See all best selling Products"),
+                        ),
+                      );
+                    },
+                  ),
+
+                  // Best Selling section
+                  PlantGridCard(
+                    plants: [
+                      Plant(
+                        name: "Fiddle Leaf Fig",
+                        description: "Statement plant",
+                        price: 45.99,
+                        imagePath: "assets/images/plant1.png",
+                      ),
+                      Plant(
+                        name: "Rubber Plant",
+                        description: "Easy care",
+                        price: 32.99,
+                        imagePath: "assets/images/plant2.png",
+                      ),
+                      Plant(
+                        name: "Pothos",
+                        description: "Trailing vine",
+                        price: 18.99,
+                        imagePath: "assets/images/plant3.png",
+                      ),
+                      Plant(
+                        name: "ZZ Plant",
+                        description: "Low light plant",
+                        price: 28.99,
+                        imagePath: "assets/images/plant1.png",
+                      ),
+                    ],
+                  ),
+
+                  // Categories section
+                  Titleview(
+                    title: "Categories",
+                    onSeeAllTap: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text("See all Categories")),
+                      );
+                    },
+                  ),
+                  PlantGridCard(
+                    plants: [
+                      Plant(
+                        name: "Fiddle Leaf Fig",
+                        description: "Statement plant",
+                        price: 45.99,
+                        imagePath: "assets/images/plant1.png",
+                      ),
+                      Plant(
+                        name: "Rubber Plant",
+                        description: "Easy care",
+                        price: 32.99,
+                        imagePath: "assets/images/plant2.png",
+                      ),
+                      Plant(
+                        name: "Pothos",
+                        description: "Trailing vine",
+                        price: 18.99,
+                        imagePath: "assets/images/plant3.png",
+                      ),
+                      Plant(
+                        name: "ZZ Plant",
+                        description: "Low light plant",
+                        price: 28.99,
+                        imagePath: "assets/images/plant1.png",
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
             if (_isSearchFocused)
               Positioned(
                 top: 70,

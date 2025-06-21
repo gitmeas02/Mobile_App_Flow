@@ -21,16 +21,17 @@ class _CarouselBannerState extends State<CarouselBanner> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: ListView(
+    return Container(
+      height: 200, // Fixed height for the carousel
+      margin: const EdgeInsets.symmetric(horizontal: 16),
+      child: Stack(
+        alignment: Alignment.bottomCenter,
         children: [
-          Stack(
-            alignment: Alignment.bottomCenter,
-            children: [
-              CarouselSlider(
-                items: imageUrls.map((url) {
+          CarouselSlider(
+            items:
+                imageUrls.map((url) {
                   return Container(
-                    margin: EdgeInsets.all(6.0),
+                    margin: const EdgeInsets.all(6.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8.0),
                       image: DecorationImage(
@@ -40,43 +41,43 @@ class _CarouselBannerState extends State<CarouselBanner> {
                     ),
                   );
                 }).toList(),
-                options: CarouselOptions(
-                  height: 180.0,
-                  enlargeCenterPage: true,
-                  autoPlay: true,
-                  aspectRatio: 16 / 9,
-                  autoPlayCurve: Curves.fastOutSlowIn,
-                  enableInfiniteScroll: true,
-                  autoPlayAnimationDuration: Duration(milliseconds: 800),
-                  viewportFraction: 0.8,
-                  onPageChanged: (index, reason) {
-                    setState(() {
-                      _current = index;
-                    });
-                  },
-                ),
-              ),
-              // Dot indicators
-              Positioned(
-                bottom: 10,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: imageUrls.asMap().entries.map((entry) {
+            options: CarouselOptions(
+              height: 180.0,
+              enlargeCenterPage: true,
+              autoPlay: true,
+              aspectRatio: 16 / 9,
+              autoPlayCurve: Curves.fastOutSlowIn,
+              enableInfiniteScroll: true,
+              autoPlayAnimationDuration: const Duration(milliseconds: 800),
+              viewportFraction: 0.8,
+              onPageChanged: (index, reason) {
+                setState(() {
+                  _current = index;
+                });
+              },
+            ),
+          ),
+          // Dot indicators
+          Positioned(
+            bottom: 10,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children:
+                  imageUrls.asMap().entries.map((entry) {
                     return Container(
                       width: 8.0,
                       height: 8.0,
-                      margin: EdgeInsets.symmetric(horizontal: 4.0),
+                      margin: const EdgeInsets.symmetric(horizontal: 4.0),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: _current == entry.key
-                            ? const Color.fromARGB(255, 23, 134, 75)
-                            : Colors.white.withOpacity(0.4),
+                        color:
+                            _current == entry.key
+                                ? const Color.fromARGB(255, 23, 134, 75)
+                                : Colors.white.withOpacity(0.4),
                       ),
                     );
                   }).toList(),
-                ),
-              ),
-            ],
+            ),
           ),
         ],
       ),

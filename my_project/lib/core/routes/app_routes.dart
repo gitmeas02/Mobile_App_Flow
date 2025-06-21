@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:my_project/features/authentication/presentation/pages/forgot_password_screen.dart';
 import 'package:my_project/features/authentication/presentation/pages/initial_login_screen.dart';
 import 'package:my_project/features/authentication/presentation/pages/login_screen.dart';
 import 'package:my_project/features/authentication/presentation/pages/signup_screen.dart';
-import 'package:my_project/features/authentication/presentation/pages/forgot_password_screen.dart';
 
-// Import from features (we'll create these next)
-import '../../features/splash/presentation/pages/splash_screen.dart';
-import '../../features/explore/presentation/pages/explore_page.dart';
-import '../../features/details/presentation/pages/product_detail_page.dart';
 import '../../features/cart/presentation/pages/cart_page.dart';
+import '../../features/details/presentation/pages/product_detail_page.dart';
+import '../../features/explore/presentation/pages/explore_page.dart';
 import '../../features/favorite/presentation/pages/favorite_page.dart';
 import '../../features/home/presentation/pages/main_screen.dart';
+// Import from features (we'll create these next)
+import '../../features/splash/presentation/pages/splash_screen.dart';
 
 class AppRoutes {
   // Route names
