@@ -3,6 +3,7 @@ import 'package:my_project/features/authentication/presentation/pages/forgot_pas
 import 'package:my_project/features/authentication/presentation/pages/initial_login_screen.dart';
 import 'package:my_project/features/authentication/presentation/pages/login_screen.dart';
 import 'package:my_project/features/authentication/presentation/pages/signup_screen.dart';
+import 'package:my_project/features/cart/presentation/pages/order_success.dart';
 
 import '../../features/cart/presentation/pages/cart_page.dart';
 import '../../features/details/presentation/pages/product_detail_page.dart';
@@ -58,7 +59,8 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => const FavoritePage());
       case forgotPassword:
         return MaterialPageRoute(builder: (_) => const ForgotPasswordScreen());
-      // TODO: Implement remaining routes as we move pages to features
+      case paymentSuccess:
+        return MaterialPageRoute(builder: (_) => const OrderSuccess());
       default:
         return MaterialPageRoute(
           builder:

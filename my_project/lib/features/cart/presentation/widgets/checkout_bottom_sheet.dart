@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:my_project/features/cart/presentation/widgets/go_to_checkout_btn.dart';
 
 class CheckoutBottomSheet extends StatelessWidget {
   final double total;
@@ -109,7 +108,10 @@ class CheckoutBottomSheet extends StatelessWidget {
                   foregroundColor: Colors.white, // text color
                   padding: const EdgeInsets.symmetric(vertical: 16),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/payment-success');
+                },
+
                 child: const Text(
                   "Place order",
                   style: TextStyle(fontSize: 18),

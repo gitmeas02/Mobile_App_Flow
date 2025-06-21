@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:my_project/core/widgets/inputs/custom_search_bar.dart';
+import 'package:my_project/features/explore/presentation/pages/FilterPage.dart';
 import 'package:my_project/features/explore/presentation/widgets/categorywidget.dart';
 
 class ExplorePage extends StatefulWidget {
@@ -60,12 +62,23 @@ class _ExplorePageState extends State<ExplorePage> {
     },
   ];
 
+  final TextEditingController _searchController = TextEditingController();
+
   void _handleCategoryTap(String category) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('$category selected!'),
         backgroundColor: const Color(0xFF4CAF50),
       ),
+    );
+  }
+
+  void _openFilterPage() async {
+    await showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => const FilterBottomSheet(),
     );
   }
 
@@ -89,28 +102,14 @@ class _ExplorePageState extends State<ExplorePage> {
       ),
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Container(
-              height: 48,
-              decoration: BoxDecoration(
-                color: const Color(0xFFF5F5F5),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: const TextField(
-                decoration: InputDecoration(
-                  hintText: 'Search Store',
-                  hintStyle: TextStyle(color: Color(0xFF9E9E9E), fontSize: 16),
-                  prefixIcon: Icon(Icons.search, color: Color(0xFF9E9E9E)),
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 14,
-                  ),
-                ),
-              ),
-            ),
+          // Custom Search Bar with Filter Icon
+          CustomSearchBar(
+            controller: _searchController,
+            onFilterTap: _openFilterPage,
+            hintText: 'Search Store',
           ),
+          const SizedBox(height: 12),
+          // Category Grid
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
