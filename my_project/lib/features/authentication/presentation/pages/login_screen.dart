@@ -1,51 +1,36 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:my_project/core/routes/app_routes.dart';
-import 'package:my_project/pages/authentication/presentation/pages/auth_service.dart';
-import 'package:my_project/pages/authentication/presentation/pages/login_screen.dart';
+import 'package:my_project/features/authentication/presentation/pages/auth_service.dart';
 
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
-  final TextEditingController usernameController = TextEditingController();
+class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool obscurePassword = true;
   bool isLoading = false;
 
-  bool isEmailValid(String email) {
-    return RegExp(r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$").hasMatch(email);
-  }
-
   @override
   void dispose() {
-    usernameController.dispose();
     emailController.dispose();
     passwordController.dispose();
     super.dispose();
   }
 
-  Future<void> _signUp() async {
-    final username = usernameController.text.trim();
+  Future<void> _signIn() async {
     final email = emailController.text.trim();
     final password = passwordController.text;
 
-    if (username.isEmpty || email.isEmpty || password.isEmpty) {
+    if (email.isEmpty || password.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please fill in all fields')),
+        const SnackBar(content: Text('Please enter email and password')),
       );
-      return;
-    }
-
-    if (!isEmailValid(email)) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('Invalid email format')));
       return;
     }
 
@@ -54,29 +39,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
     });
 
     try {
-      // Create user account
-      await authService.value.createAccount(email: email, password: password);
+      // Call your AuthService signIn method
+      await authService.value.signIn(email: email, password: password);
 
-      // Update display name (username)
-      await authService.value.updateUsername(username: username);
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Account created successfully!')),
-      );
-
-      // Navigate to Login screen or home
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const LoginScreen()),
-      );
-    } catch (e) {
-      String errorMessage = 'An error occurred. Please try again.';
-      if (e is FirebaseAuthException) {
-        errorMessage = e.message ?? errorMessage;
-      }
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text(errorMessage)));
+      ).showSnackBar(const SnackBar(content: Text('Logged in successfully!')));
+
+      // Navigate to home screen
+      Navigator.of(context).pushReplacementNamed(AppRoutes.home);
+    } on FirebaseAuthException catch (e) {
+      String message = e.message ?? 'Login failed. Please try again.';
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(message)));
+    } catch (e) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('An error occurred: $e')));
     } finally {
       setState(() {
         isLoading = false;
@@ -89,17 +69,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
+          // Allows for scrolling on small screens
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24.0),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(height: 40),
-                Image.asset('assets/images/plant.png', height: 150),
+                Center(
+                  child: Image.asset('assets/images/plant.png', height: 150),
+                ),
                 const SizedBox(height: 32),
                 const Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "Sign Up",
+                    "Log In",
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -111,34 +95,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 const Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "Enter your credentials to continue",
+                    "Enter your email and password",
                     style: TextStyle(fontSize: 14, color: Colors.black54),
                   ),
                 ),
                 const SizedBox(height: 24),
 
-                // Username Field
-                const Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "Username",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xFF7C7C7C),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 4),
-                TextField(
-                  style: const TextStyle(color: Colors.black),
-                  controller: usernameController,
-                  decoration: const InputDecoration(
-                    border: UnderlineInputBorder(),
-                  ),
-                ),
-                const SizedBox(height: 24),
-
-                // Email Field
+                // Email TextField
                 const Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
@@ -153,20 +116,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 TextField(
                   style: const TextStyle(color: Colors.black),
                   controller: emailController,
-                  decoration: InputDecoration(
-                    border: const UnderlineInputBorder(),
-                    suffixIcon:
-                        isEmailValid(emailController.text)
-                            ? const Icon(Icons.check, color: Colors.green)
-                            : null,
+                  decoration: const InputDecoration(
+                    border: UnderlineInputBorder(),
                   ),
-                  onChanged: (value) {
-                    setState(() {});
-                  },
+                  keyboardType: TextInputType.emailAddress,
                 ),
+
                 const SizedBox(height: 24),
 
-                // Password Field
+                // Password TextField
                 const Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
@@ -199,40 +157,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                 ),
 
-                const SizedBox(height: 16),
-                RichText(
-                  textAlign: TextAlign.left,
-                  text: TextSpan(
-                    text: "By continuing you agree to our ",
-                    style: TextStyle(color: Colors.black54),
-                    children: [
-                      TextSpan(
-                        text: "Terms of Service",
-                        style: TextStyle(
-                          color: Colors.green,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      TextSpan(text: " and "),
-                      TextSpan(
-                        text: "Privacy Policy.",
-                        style: TextStyle(
-                          color: Colors.green,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
+                const SizedBox(height: 12),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(AppRoutes.forgotPassword);
+                    },
+                    child: const Text(
+                      "Forgot Password?",
+                      style: TextStyle(color: Colors.black87),
+                    ),
                   ),
                 ),
 
-                const SizedBox(height: 24),
+                const SizedBox(height: 12),
 
-                // Sign Up Button
+                // Log In Button
                 SizedBox(
                   width: double.infinity,
                   height: 50,
                   child: ElevatedButton(
-                    onPressed: isLoading ? null : _signUp,
+                    onPressed: isLoading ? null : _signIn,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.green,
                       shape: RoundedRectangleBorder(
@@ -244,26 +190,33 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ? const CircularProgressIndicator(
                               color: Colors.white,
                             )
-                            : const Text("Sign Up"),
+                            : const Text(
+                              "Log In",
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                   ),
                 ),
 
                 const SizedBox(height: 24),
 
-                // Footer: Already have an account
+                // Signup Text
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
-                      "Already have an Account? ",
+                      "Don't have an account? ",
                       style: TextStyle(color: Colors.black),
                     ),
                     TextButton(
                       onPressed: () {
-                        Navigator.of(context).pushNamed(AppRoutes.Login);
+                        Navigator.of(context).pushNamed(AppRoutes.Register);
                       },
                       child: const Text(
-                        "Sign In",
+                        "Sign Up",
                         style: TextStyle(
                           color: Colors.green,
                           fontWeight: FontWeight.bold,
@@ -272,6 +225,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ],
                 ),
+
                 const SizedBox(height: 24),
               ],
             ),
