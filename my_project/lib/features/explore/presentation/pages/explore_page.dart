@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_project/features/explore/presentation/widgets/categorywidget.dart';
 
-
 class ExplorePage extends StatefulWidget {
   const ExplorePage({super.key});
 
