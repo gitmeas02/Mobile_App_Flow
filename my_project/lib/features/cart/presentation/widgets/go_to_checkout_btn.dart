@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import './checkout_bottom_sheet.dart';
 class GoToCheckoutBtn extends StatelessWidget {
   final double total;
@@ -13,7 +14,7 @@ class GoToCheckoutBtn extends StatelessWidget {
         style: TextButton.styleFrom(
           backgroundColor: Colors.green,
           foregroundColor: Colors.white,
-          padding: EdgeInsets.symmetric(horizontal: 23,vertical: 18)
+          padding: EdgeInsets.symmetric(horizontal: 23, vertical: 18),
         ),
         onPressed: () {
           showModalBottomSheet(
@@ -25,23 +26,24 @@ class GoToCheckoutBtn extends StatelessWidget {
           );
         },
         child: Row(
-
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-          "Go to Checkout",
-          style: TextStyle(fontSize: 18),
-        ),
-        SizedBox(
-          height: 22,
-          width: 49,
-          child: Text('\$${total.toStringAsFixed(2)}',
-          style: TextStyle(color: Colors.white, fontSize:12 ,
-          backgroundColor: Color(0xFF489E67)),)
-          )
+            Text("Go to Checkout", style: TextStyle(fontSize: 18)),
+            SizedBox(
+              height: 22,
+              width: 49,
+              child: Text(
+                '\$${total.toStringAsFixed(2)}',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 12,
+                  backgroundColor: Color(0xFF489E67),
+                ),
+              ),
+            ),
           ],
-        )
+        ),
       ),
     );
   }
