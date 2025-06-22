@@ -13,50 +13,57 @@ class PlantCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(left: 16, top: 16, right: 16),
+      padding: const EdgeInsets.all(16),
       width: 175,
       height: 250,
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey),
+        border: Border.all(color: Colors.grey.shade300),
         borderRadius: BorderRadius.circular(20),
+        color: Colors.white,
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildPlantImage(),
+          // Plant Image
+          Center(child: _buildPlantImage()),
+          const SizedBox(height: 12),
           
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              plant?.name ?? 'Name',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.black,
-                fontWeight: FontWeight.w600,
-              ),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
+          // Plant Name
+          Text(
+            plant?.name ?? 'Name',
+            style: const TextStyle(
+              fontSize: 16,
+              color: Colors.black,
+              fontWeight: FontWeight.w600,
             ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              plant?.description ?? 'Description',
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.grey,
-                fontWeight: FontWeight.w600,
-              ),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
+          const SizedBox(height: 4),
+          
+          // Plant Description
+          Text(
+            plant?.description ?? 'Description',
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.grey.shade600,
+              fontWeight: FontWeight.w400,
             ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
-          SizedBox(height: 11),
+          
+          // Spacer to push price and button to bottom
+          const Spacer(),
+          
+          // Price and Add Button Row - aligned at bottom
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
                 '\$${plant?.price.toStringAsFixed(2) ?? '4.99'}',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 18,
                   color: Colors.black,
                   fontWeight: FontWeight.w600,
@@ -71,7 +78,7 @@ class PlantCard extends StatelessWidget {
                 ),
                 child: IconButton(
                   onPressed: () {},
-                  icon: Icon(Icons.add, color: Colors.white, size: 26),
+                  icon: const Icon(Icons.add, color: Colors.white, size: 26),
                   padding: EdgeInsets.zero,
                 ),
               ),
@@ -93,14 +100,14 @@ class PlantCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         child: Image.network(
           imagePath,
-          width: 130,
-          height: 110,
+          width: 100,
+          height: 100,
           fit: BoxFit.cover,
           loadingBuilder: (context, child, loadingProgress) {
             if (loadingProgress == null) return child;
             return Container(
-              width: 130,
-              height: 110,
+              width: 100,
+              height: 100,
               decoration: BoxDecoration(
                 color: Colors.grey[200],
                 borderRadius: BorderRadius.circular(8),
@@ -112,20 +119,20 @@ class PlantCard extends StatelessWidget {
                           loadingProgress.expectedTotalBytes!
                       : null,
                   strokeWidth: 2,
-                  color: Color(0xFF53B175),
+                  color: const Color(0xFF53B175),
                 ),
               ),
             );
           },
           errorBuilder: (context, error, stackTrace) {
             return Container(
-              width: 130,
-              height: 110,
+              width: 100,
+              height: 100,
               decoration: BoxDecoration(
                 color: Colors.grey[200],
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: Icon(
+              child: const Icon(
                 Icons.local_florist,
                 size: 50,
                 color: Color(0xFF53B175),
@@ -140,18 +147,18 @@ class PlantCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         child: Image.asset(
           imagePath ?? 'assets/images/plant.png',
-          width: 130,
-          height: 110,
+          width: 100,
+          height: 100,
           fit: BoxFit.cover,
           errorBuilder: (context, error, stackTrace) {
             return Container(
-              width: 130,
-              height: 110,
+              width: 100,
+              height: 100,
               decoration: BoxDecoration(
                 color: Colors.grey[200],
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: Icon(
+              child: const Icon(
                 Icons.local_florist,
                 size: 50,
                 color: Color(0xFF53B175),
