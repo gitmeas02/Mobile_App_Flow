@@ -244,12 +244,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       CategoryBanner(
                         name: "Succulents & Cacti",
                         imagePath: "assets/images/plant3.png",
-                        colors: const Color.fromARGB(255, 162, 224, 185),
+                        colors: const Color(0xFFF7A593)
                       ),
                       CategoryBanner(
                         name: "Outdoor Plants",
                         imagePath: "assets/images/plant1.png",
-                        colors: const Color.fromARGB(255, 162, 224, 185),
+                        colors: const Color(0xFFD3B0E0)
                       ),
                     ],
                   ),
