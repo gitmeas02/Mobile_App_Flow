@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_project/features/plant/data/models/plant.dart';
 import 'plant_card.dart';
 
 class PlantGridCard extends StatelessWidget {
@@ -32,17 +33,4 @@ class PlantGridCard extends StatelessWidget {
   }
 }
 
-// Simple Plant model for demonstration
-class Plant {
-  final String name;
-  final String description;
-  final double price;
-  final String imagePath;
 
-  const Plant({
-    required this.name,
-    required this.description,
-    required this.price,
-    required this.imagePath,
-  });
-}

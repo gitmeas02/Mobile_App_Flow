@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:my_project/core/utils/button/titleView.dart';
 import 'package:my_project/core/widgets/inputs/custom_search_bar.dart';
 import 'package:my_project/features/home/presentation/widgets/carousel_banner.dart';
+import 'package:my_project/features/plant/data/models/category_banner.dart';
+import 'package:my_project/features/plant/data/models/plant.dart';
+import 'package:my_project/features/plant/presentation/widgets/plant_grid_banner.dart';
 import 'package:my_project/features/plant/presentation/widgets/plant_grid_card.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -226,6 +229,31 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     },
                   ),
+                  PlantGridBanner(
+                    banners: [
+                      CategoryBanner(
+                        name: "Indoor Plants",
+                        imagePath: "assets/images/plant1.png",
+                        colors: const Color(0xFFFEF8E5),
+                      ),
+                      CategoryBanner(
+                        name: "Flowering Plants",
+                        imagePath: "assets/images/plant2.png",
+                        colors: const Color.fromARGB(255, 162, 224, 185),
+                      ),
+                      CategoryBanner(
+                        name: "Succulents & Cacti",
+                        imagePath: "assets/images/plant3.png",
+                        colors: const Color.fromARGB(255, 162, 224, 185),
+                      ),
+                      CategoryBanner(
+                        name: "Outdoor Plants",
+                        imagePath: "assets/images/plant1.png",
+                        colors: const Color.fromARGB(255, 162, 224, 185),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 16),
                   PlantGridCard(
                     plants: [
                       Plant(
