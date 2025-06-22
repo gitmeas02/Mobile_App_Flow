@@ -1,3 +1,5 @@
+import 'package:my_project/features/plant/data/models/plant.dart';
+
 import '../../presentation/widgets/plant_grid_card.dart';
 
 class TreflePlant {
