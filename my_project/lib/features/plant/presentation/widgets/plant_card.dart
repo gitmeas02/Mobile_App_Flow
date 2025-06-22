@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:my_project/features/plant/data/models/plant.dart';
 
-
 class PlantCard extends StatelessWidget {
   final Plant? plant;
 
-  const PlantCard({
-    super.key, 
-    this.plant,
-  });
+  const PlantCard({super.key, this.plant});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +23,7 @@ class PlantCard extends StatelessWidget {
           // Plant Image
           Center(child: _buildPlantImage()),
           const SizedBox(height: 12),
-          
+
           // Plant Name
           Text(
             plant?.name ?? 'Name',
@@ -40,7 +36,7 @@ class PlantCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
           const SizedBox(height: 4),
-          
+
           // Plant Description
           Text(
             plant?.description ?? 'Description',
@@ -52,10 +48,10 @@ class PlantCard extends StatelessWidget {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
-          
+
           // Spacer to push price and button to bottom
           const Spacer(),
-          
+
           // Price and Add Button Row - aligned at bottom
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -95,7 +91,6 @@ class PlantCard extends StatelessWidget {
     // Check if it's a network URL
     if (imagePath != null &&
         (imagePath.startsWith('http://') || imagePath.startsWith('https://'))) {
-      
       return ClipRRect(
         borderRadius: BorderRadius.circular(8),
         child: Image.network(
@@ -114,10 +109,11 @@ class PlantCard extends StatelessWidget {
               ),
               child: Center(
                 child: CircularProgressIndicator(
-                  value: loadingProgress.expectedTotalBytes != null
-                      ? loadingProgress.cumulativeBytesLoaded /
-                          loadingProgress.expectedTotalBytes!
-                      : null,
+                  value:
+                      loadingProgress.expectedTotalBytes != null
+                          ? loadingProgress.cumulativeBytesLoaded /
+                              loadingProgress.expectedTotalBytes!
+                          : null,
                   strokeWidth: 2,
                   color: const Color(0xFF53B175),
                 ),
