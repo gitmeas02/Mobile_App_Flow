@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:my_project/features/plant/data/models/plant.dart';
-import '../widgets/plant_grid_card.dart';
 
 class PlantProvider with ChangeNotifier {
   List<Plant> _plants = [];
