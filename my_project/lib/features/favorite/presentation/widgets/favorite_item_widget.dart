@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../plant/data/models/plant.dart';
-import '../../../cart/presentation/providers/cart_provider.dart';
-import '../providers/favorite_provider.dart';
+
 
 class FavoriteItemWidget extends ConsumerWidget {
   final Plant plant;

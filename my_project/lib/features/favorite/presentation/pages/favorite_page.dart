@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/favorite_provider.dart';
 import '../widgets/favorite_item_widget.dart';
 import '../../../cart/presentation/providers/cart_provider.dart';
+import '../../../details/presentation/pages/product_detail_page.dart';
 
 class FavoritePage extends ConsumerWidget {
   const FavoritePage({super.key});
@@ -60,11 +61,15 @@ class FavoritePage extends ConsumerWidget {
                       itemBuilder: (context, index) {
                         return GestureDetector(
                           onTap: () {
-                            // Navigate to product detail page
-                            Navigator.pushNamed(
+                            // Navigate to product detail page with the plant object
+                            Navigator.push(
                               context,
-                              '/product-detail',
-                              arguments: favoriteItems[index],
+                              MaterialPageRoute(
+                                builder:
+                                    (context) => ProductDetailPage(
+                                      plant: favoriteItems[index],
+                                    ),
+                              ),
                             );
                           },
                           child: FavoriteItemWidget(
