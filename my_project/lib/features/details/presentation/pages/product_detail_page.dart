@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/widgets/buttons/add_to_basket_button.dart';
 import '../../../../core/widgets/common/expandable_section_widget.dart';
 import '../../../../core/widgets/common/product_image_widget.dart';
 import '../../../../core/widgets/common/product_info_widget.dart';
 import '../../../../core/widgets/common/quantity_selector_widget.dart';
 import '../../../../core/widgets/common/rating_widget.dart';
+import '../../../cart/presentation/providers/cart_provider.dart';
+import '../../../plant/data/models/plant.dart';
 
-class ProductDetailPage extends StatefulWidget {
-  const ProductDetailPage({super.key});
+class ProductDetailPage extends ConsumerStatefulWidget {
+  final Plant? plant;
+
+  const ProductDetailPage({super.key, this.plant});
 
   @override
-  State<ProductDetailPage> createState() => _ProductDetailPageState();
+  ConsumerState<ProductDetailPage> createState() => _ProductDetailPageState();
 }
 
-class _ProductDetailPageState extends State<ProductDetailPage> {
+class _ProductDetailPageState extends ConsumerState<ProductDetailPage> {
   int quantity = 1;
   bool isFavorite = false;
 
@@ -22,6 +27,22 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     'assets/images/plant2.png',
     'assets/images/plant3.png',
   ];
+
+  // Default plant data when no plant is passed
+  late Plant _currentPlant;
+
+  @override
+  void initState() {
+    super.initState();
+    _currentPlant =
+        widget.plant ??
+        const Plant(
+          name: 'Beautiful Plant',
+          description: 'A beautiful indoor plant',
+          price: 4.99,
+          imagePath: 'assets/images/plant1.png',
+        );
+  }
 
   @override
   void didChangeDependencies() {
@@ -74,10 +95,10 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Expanded(
+                          Expanded(
                             child: ProductInfoWidget(
-                              title: 'Plant',
-                              subtitle: '1 cup, Price',
+                              title: _currentPlant.name,
+                              subtitle: _currentPlant.description,
                             ),
                           ),
                           IconButton(
@@ -110,9 +131,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                               });
                             },
                           ),
-                          const Text(
-                            '\$4.99',
-                            style: TextStyle(
+                          Text(
+                            '\$${_currentPlant.price.toStringAsFixed(2)}',
+                            style: const TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
@@ -209,10 +230,18 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             padding: const EdgeInsets.all(20),
             child: AddToBasketButton(
               onPressed: () {
+                // Add plant to cart with selected quantity
+                ref
+                    .read(cartProvider.notifier)
+                    .addPlantToCart(_currentPlant, quantity: quantity);
+
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    content: Text('Added $quantity item(s) to basket'),
-                    backgroundColor: Colors.green,
+                    content: Text(
+                      'Added $quantity ${_currentPlant.name}(s) to cart',
+                    ),
+                    backgroundColor: const Color(0xFF53B175),
+                    duration: const Duration(seconds: 2),
                   ),
                 );
               },

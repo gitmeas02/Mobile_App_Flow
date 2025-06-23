@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/constants/colors.dart';
 import '../../../account/presentation/pages/account_page.dart';
 import '../../../cart/presentation/pages/cart_page.dart';
+import '../../../cart/presentation/providers/cart_provider.dart';
 import '../../../explore/presentation/pages/explore_page.dart';
 import '../../../favorite/presentation/pages/favorite_page.dart';
 import 'home_screen.dart';
 
-class MainScreen extends StatefulWidget {
+class MainScreen extends ConsumerStatefulWidget {
   const MainScreen({super.key});
 
   @override
-  State<MainScreen> createState() => _MainScreenState();
+  ConsumerState<MainScreen> createState() => _MainScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _MainScreenState extends ConsumerState<MainScreen> {
   int _currentIndex = 0;
 
   final List<Widget> _screens = const [
@@ -26,6 +28,8 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final cartCount = ref.watch(cartCountProvider);
+
     return Scaffold(
       body: _screens[_currentIndex],
       bottomNavigationBar: Container(
@@ -55,21 +59,32 @@ class _MainScreenState extends State<MainScreen> {
             type: BottomNavigationBarType.fixed,
             selectedItemColor: AppColors.secondaryColor,
             unselectedItemColor: Colors.blueGrey,
-            items: const [
-              BottomNavigationBarItem(icon: Icon(Icons.shop), label: 'Home'),
-              BottomNavigationBarItem(
+            items: [
+              const BottomNavigationBarItem(
+                icon: Icon(Icons.shop),
+                label: 'Home',
+              ),
+              const BottomNavigationBarItem(
                 icon: Icon(Icons.explore),
                 label: 'Explore',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.shopping_bag),
+                icon:
+                    cartCount > 0
+                        ? Badge(
+                          label: Text(cartCount.toString()),
+                          backgroundColor: const Color(0xFF53B175),
+                          textColor: Colors.white,
+                          child: const Icon(Icons.shopping_bag),
+                        )
+                        : const Icon(Icons.shopping_bag),
                 label: 'Cart',
               ),
-              BottomNavigationBarItem(
+              const BottomNavigationBarItem(
                 icon: Icon(Icons.favorite_border),
                 label: 'Favorite',
               ),
-              BottomNavigationBarItem(
+              const BottomNavigationBarItem(
                 icon: Icon(Icons.person),
                 label: 'Account',
               ),

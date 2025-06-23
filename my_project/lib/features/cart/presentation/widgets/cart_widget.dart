@@ -3,8 +3,18 @@ import 'package:my_project/features/cart/data/model/card_model.dart';
 
 class CartWidget extends StatelessWidget {
   final CartItem item;
+  final VoidCallback? onIncrement;
+  final VoidCallback? onDecrement;
+  final VoidCallback? onRemove;
 
-  const CartWidget({super.key, required this.item});
+  const CartWidget({
+    super.key,
+    required this.item,
+    this.onIncrement,
+    this.onDecrement,
+    this.onRemove,
+  });
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -22,30 +32,29 @@ class CartWidget extends StatelessWidget {
               children: [
                 Text(
                   item.name,
-                  style: TextStyle(color: Colors.black, fontSize: 18),
+                  style: const TextStyle(color: Colors.black, fontSize: 18),
                 ),
-                Text(item.descriptions, style: TextStyle(color: Colors.black)),
+                Text(
+                  item.descriptions,
+                  style: const TextStyle(color: Colors.black),
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Container(
                       width: 45,
-                       height: 45,
+                      height: 45,
                       decoration: BoxDecoration(
-                        color:
-                            Colors
-                                .transparent, // or any background color you want
+                        color: Colors.transparent,
                         borderRadius: BorderRadius.circular(15.7),
-                        border: Border.all(
-                          color: Colors.grey,
-                        ), // optional border
+                        border: Border.all(color: Colors.grey),
                       ),
                       child: IconButton(
-                        onPressed: () {},
+                        onPressed: onDecrement,
                         icon: const Icon(Icons.remove),
                         color: Colors.grey,
                         iconSize: 24,
-                        padding: const EdgeInsets.all(4), // icon padding
+                        padding: const EdgeInsets.all(4),
                       ),
                     ),
 
@@ -60,23 +69,19 @@ class CartWidget extends StatelessWidget {
                       ),
                     ),
                     Container(
-                       width: 45,
-                       height: 45, 
+                      width: 45,
+                      height: 45,
                       decoration: BoxDecoration(
-                        color:
-                            Colors
-                                .transparent, // or any background color you want
+                        color: Colors.transparent,
                         borderRadius: BorderRadius.circular(15.7),
-                        border: Border.all(
-                          color: Colors.grey,
-                        ), // optional border
+                        border: Border.all(color: Colors.grey),
                       ),
                       child: IconButton(
-                        onPressed: () {},
+                        onPressed: onIncrement,
                         icon: const Icon(Icons.add),
                         color: Colors.green,
                         iconSize: 24,
-                        padding: const EdgeInsets.all(2), // icon padding
+                        padding: const EdgeInsets.all(2),
                       ),
                     ),
                   ],
@@ -89,13 +94,13 @@ class CartWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 IconButton(
-                  onPressed: () {},
+                  onPressed: onRemove,
                   color: Colors.black,
                   icon: const Icon(Icons.close),
                 ),
                 Text(
                   "\$${item.price.toStringAsFixed(2)}",
-                  style: TextStyle(color: Colors.black, fontSize: 18),
+                  style: const TextStyle(color: Colors.black, fontSize: 18),
                 ),
               ],
             ),
