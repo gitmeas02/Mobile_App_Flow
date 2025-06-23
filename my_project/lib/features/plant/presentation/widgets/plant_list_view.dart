@@ -28,7 +28,7 @@ class PlantListView extends StatelessWidget {
               crossAxisCount: 2,
               mainAxisSpacing: 16,
               crossAxisSpacing: 16,
-              childAspectRatio: 0.7,
+              childAspectRatio: 0.63, // Adjusted to prevent overflow - calculated as width/height (175/275)
             ),
             itemCount: plants.length + (hasMoreData ? 1 : 0),
             itemBuilder: (context, index) {

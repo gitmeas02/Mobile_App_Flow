@@ -6,6 +6,7 @@ import '../../../cart/presentation/pages/cart_page.dart';
 import '../../../cart/presentation/providers/cart_provider.dart';
 import '../../../explore/presentation/pages/explore_page.dart';
 import '../../../favorite/presentation/pages/favorite_page.dart';
+import '../../../favorite/presentation/providers/favorite_provider.dart';
 import 'home_screen.dart';
 
 class MainScreen extends ConsumerStatefulWidget {
@@ -29,6 +30,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
   @override
   Widget build(BuildContext context) {
     final cartCount = ref.watch(cartCountProvider);
+    final favoriteCount = ref.watch(favoriteCountProvider);
 
     return Scaffold(
       body: _screens[_currentIndex],
@@ -80,8 +82,16 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                         : const Icon(Icons.shopping_bag),
                 label: 'Cart',
               ),
-              const BottomNavigationBarItem(
-                icon: Icon(Icons.favorite_border),
+              BottomNavigationBarItem(
+                icon:
+                    favoriteCount > 0
+                        ? Badge(
+                          label: Text(favoriteCount.toString()),
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                          child: const Icon(Icons.favorite_border),
+                        )
+                        : const Icon(Icons.favorite_border),
                 label: 'Favorite',
               ),
               const BottomNavigationBarItem(
