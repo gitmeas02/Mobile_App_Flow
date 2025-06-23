@@ -43,7 +43,8 @@ class IndoorPlantGridView extends StatelessWidget {
           crossAxisCount: 2,
           mainAxisSpacing: 16,
           crossAxisSpacing: 16,
-          childAspectRatio: 0.63, // Adjusted to prevent overflow - calculated as width/height (175/275)
+          childAspectRatio:
+              0.63, // Adjusted to prevent overflow - calculated as width/height (175/275)
         ),
         itemCount: plants!.length,
         itemBuilder: (context, index) {
