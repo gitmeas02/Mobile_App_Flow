@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_project/features/explore/presentation/pages/indoor_plant_detail_page.dart';
 import 'package:my_project/features/plant/data/models/category_banner.dart';
 
 class PlantCategoryBanner extends StatelessWidget {
@@ -27,33 +28,43 @@ class PlantCategoryBanner extends StatelessWidget {
         color: banner.colors,
         borderRadius: BorderRadius.circular(20),
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Flexible(
-            flex: 2,
-            child: Image.asset(
-              banner.imagePath,
-              width: 80, // Reduced from 105 to prevent overflow
-              height: 80, // Reduced from 90 to maintain aspect ratio
-              fit: BoxFit.contain,
-            ),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const IndoorPlantDetailPage(), 
+        ),
+          );
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+        Flexible(
+          flex: 2,
+          child: Image.asset(
+            banner.imagePath,
+            width: 80, // Reduced from 105 to prevent overflow
+            height: 80, // Reduced from 90 to maintain aspect ratio
+            fit: BoxFit.contain,
           ),
-          Flexible(
-            flex: 3,
-            child: Text(
-              banner.name,
-              style: const TextStyle(
-                color: Colors.black,
-                fontSize: 18, // Reduced from 20 for better fit
-                fontWeight: FontWeight.w500,
-              ),
-              textAlign: TextAlign.center,
-              overflow: TextOverflow.ellipsis,
-              maxLines: 2,
+        ),
+        Flexible(
+          flex: 3,
+          child: Text(
+            banner.name,
+            style: const TextStyle(
+          color: Colors.black,
+          fontSize: 18, // Reduced from 20 for better fit
+          fontWeight: FontWeight.w500,
             ),
+            textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
           ),
-        ],
+        ),
+          ],
+        ),
       ),
     );
   }
