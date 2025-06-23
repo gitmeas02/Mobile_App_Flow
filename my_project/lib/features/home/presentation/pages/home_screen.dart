@@ -41,13 +41,31 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         _isSearchFocused = _searchFocusNode.hasFocus;
       });
     });
+
+    // Add search functionality
+    _searchController.addListener(_onSearchChanged);
   }
 
   @override
   void dispose() {
+    _searchController.removeListener(_onSearchChanged);
     _searchController.dispose();
     _searchFocusNode.dispose();
     super.dispose();
+  }
+
+  void _onSearchChanged() {
+    final query = _searchController.text.toLowerCase();
+    setState(() {
+      if (query.isEmpty) {
+        _filteredItems = [];
+      } else {
+        _filteredItems =
+            _searchItems
+                .where((item) => item.toLowerCase().contains(query))
+                .toList();
+      }
+    });
   }
 
   void _onFilterTap() {
