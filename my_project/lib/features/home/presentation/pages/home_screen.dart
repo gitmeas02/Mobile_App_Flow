@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_project/core/utils/button/titleView.dart';
 import 'package:my_project/core/widgets/inputs/custom_search_bar.dart';
 import 'package:my_project/features/home/presentation/widgets/carousel_banner.dart';
@@ -6,52 +7,39 @@ import 'package:my_project/features/plant/data/models/category_banner.dart';
 import 'package:my_project/features/plant/data/models/plant.dart';
 import 'package:my_project/features/plant/presentation/widgets/plant_grid_banner.dart';
 import 'package:my_project/features/plant/presentation/widgets/plant_grid_card.dart';
+import 'package:my_project/features/favorite/presentation/providers/favorite_provider.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends ConsumerState<HomeScreen> {
   final TextEditingController _searchController = TextEditingController();
   final FocusNode _searchFocusNode = FocusNode();
-
-  final List<String> _allItems = [
-    "Apple",
-    "Banana",
-    "Cherry",
-    "DragonFruit",
-    "Elderberry",
-    "Fig",
-    "Grape",
-  ];
-
-  List<String> _filteredItems = [];
   bool _isSearchFocused = false;
+  List<String> _filteredItems = [];
+
+  final List<String> _searchItems = [
+    'Monstera',
+    'Snake Plant',
+    'Fiddle Leaf Fig',
+    'Rubber Plant',
+    'Pothos',
+    'ZZ Plant',
+    'Peace Lily',
+    'Spider Plant',
+  ];
 
   @override
   void initState() {
     super.initState();
-    _filteredItems = _allItems;
-
-    _searchController.addListener(_filterList);
-
     _searchFocusNode.addListener(() {
       setState(() {
         _isSearchFocused = _searchFocusNode.hasFocus;
       });
-    });
-  }
-
-  void _filterList() {
-    final query = _searchController.text.toLowerCase();
-    setState(() {
-      _filteredItems =
-          _allItems
-              .where((item) => item.toLowerCase().contains(query))
-              .toList();
     });
   }
 
@@ -63,17 +51,17 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _onFilterTap() {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(const SnackBar(content: Text("Filter Tapped!")));
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text("Filter feature coming soon!")),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    final favoriteCount = ref.watch(favoriteCountProvider);
+
     return GestureDetector(
-      behavior: HitTestBehavior.translucent,
       onTap: () {
-        // Remove focus from search bar to hide the list
         _searchFocusNode.unfocus();
       },
       child: Scaffold(
@@ -112,8 +100,19 @@ class _HomeScreenState extends State<HomeScreen> {
                 icon: const Icon(Icons.notifications_none),
               ),
               IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.favorite_border),
+                onPressed: () {
+                  // Navigate to favorite page
+                  Navigator.pushNamed(context, '/favorite');
+                },
+                icon:
+                    favoriteCount > 0
+                        ? Badge(
+                          label: Text(favoriteCount.toString()),
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                          child: const Icon(Icons.favorite_border),
+                        )
+                        : const Icon(Icons.favorite_border),
               ),
             ],
           ),
@@ -244,12 +243,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       CategoryBanner(
                         name: "Succulents & Cacti",
                         imagePath: "assets/images/plant3.png",
-                        colors: const Color(0xFFF7A593)
+                        colors: const Color(0xFFF7A593),
                       ),
                       CategoryBanner(
                         name: "Outdoor Plants",
                         imagePath: "assets/images/plant1.png",
-                        colors: const Color(0xFFD3B0E0)
+                        colors: const Color(0xFFD3B0E0),
                       ),
                     ],
                   ),

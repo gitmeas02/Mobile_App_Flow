@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:my_project/features/explore/presentation/widgets/custom_app_bar_widget.dart';
 import '../../../../core/widgets/buttons/add_to_basket_button.dart';
 import '../../../../core/widgets/common/expandable_section_widget.dart';
 import '../../../../core/widgets/common/product_image_widget.dart';
@@ -7,6 +8,7 @@ import '../../../../core/widgets/common/product_info_widget.dart';
 import '../../../../core/widgets/common/quantity_selector_widget.dart';
 import '../../../../core/widgets/common/rating_widget.dart';
 import '../../../cart/presentation/providers/cart_provider.dart';
+import '../../../favorite/presentation/providers/favorite_provider.dart';
 import '../../../plant/data/models/plant.dart';
 
 class ProductDetailPage extends ConsumerStatefulWidget {
@@ -20,7 +22,6 @@ class ProductDetailPage extends ConsumerStatefulWidget {
 
 class _ProductDetailPageState extends ConsumerState<ProductDetailPage> {
   int quantity = 1;
-  bool isFavorite = false;
 
   final List<String> _imagePaths = [
     'assets/images/plant1.png',
@@ -55,19 +56,18 @@ class _ProductDetailPageState extends ConsumerState<ProductDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    // Fix: Watch the favorites list directly to get real-time updates
+    final favorites = ref.watch(favoriteProvider);
+    final isFavorite = favorites.any((p) => p.name == _currentPlant.name);
+
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.pop(context),
-        ),
+      appBar: CustomAppBarWidget(
+        title: 'Detail',
         actions: [
           IconButton(
-            icon: const Icon(Icons.share, color: Colors.black),
             onPressed: () {},
+            icon: Icon(Icons.share, color: Colors.black),
           ),
         ],
       ),
@@ -77,6 +77,7 @@ class _ProductDetailPageState extends ConsumerState<ProductDetailPage> {
             child: ListView(
               padding: EdgeInsets.zero,
               children: [
+                // ...existing ProductImageWidget...
                 const RepaintBoundary(
                   child: ProductImageWidget(
                     assetImagePaths: [
@@ -109,9 +110,21 @@ class _ProductDetailPageState extends ConsumerState<ProductDetailPage> {
                               color: isFavorite ? Colors.red : Colors.grey,
                             ),
                             onPressed: () {
-                              setState(() {
-                                isFavorite = !isFavorite;
-                              });
+                              ref
+                                  .read(favoriteProvider.notifier)
+                                  .toggleFavorite(_currentPlant);
+
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    isFavorite
+                                        ? 'Removed from favorites'
+                                        : 'Added to favorites',
+                                  ),
+                                  backgroundColor: const Color(0xFF53B175),
+                                  duration: const Duration(seconds: 1),
+                                ),
+                              );
                             },
                             padding: EdgeInsets.zero,
                           ),
@@ -119,7 +132,7 @@ class _ProductDetailPageState extends ConsumerState<ProductDetailPage> {
                       ),
                       const SizedBox(height: 30),
 
-                      // Quantity and Price Row
+                      // ...existing quantity and price row...
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -143,7 +156,7 @@ class _ProductDetailPageState extends ConsumerState<ProductDetailPage> {
                       ),
                       const SizedBox(height: 30),
 
-                      // Expandable Sections
+                      // ...existing expandable sections...
                       const RepaintBoundary(
                         child: ExpandableSectionWidget(
                           title: 'Product Detail',
@@ -225,12 +238,11 @@ class _ProductDetailPageState extends ConsumerState<ProductDetailPage> {
             ),
           ),
 
-          // Bottom Button
+          // ...existing bottom button...
           Padding(
             padding: const EdgeInsets.all(20),
             child: AddToBasketButton(
               onPressed: () {
-                // Add plant to cart with selected quantity
                 ref
                     .read(cartProvider.notifier)
                     .addPlantToCart(_currentPlant, quantity: quantity);

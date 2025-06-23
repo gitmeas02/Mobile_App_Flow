@@ -11,7 +11,7 @@ class PlantGridCard extends StatelessWidget {
     super.key,
     this.plants,
     this.itemCount = 10,
-    this.height = 250,
+    this.height = 280, // Increased from 250 to accommodate PlantCard height of 275
   });
 
   @override
