@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_project/features/details/presentation/pages/product_detail_page.dart';
 import 'package:my_project/features/plant/data/models/plant.dart';
+import 'package:my_project/features/cart/presentation/providers/cart_provider.dart';
 
-class PlantCard extends StatelessWidget {
+class PlantCard extends ConsumerWidget {
   final Plant? plant;
 
   const PlantCard({super.key, this.plant});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       padding: const EdgeInsets.all(16),
       width: 175,
@@ -22,7 +24,9 @@ class PlantCard extends StatelessWidget {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const ProductDetailPage()),
+            MaterialPageRoute(
+              builder: (context) => ProductDetailPage(plant: plant),
+            ),
           );
         },
         child: Column(
@@ -81,7 +85,21 @@ class PlantCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      if (plant != null) {
+                        // Add plant to cart using Riverpod provider
+                        ref.read(cartProvider.notifier).addPlantToCart(plant!);
+
+                        // Show success message
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('${plant!.name} added to cart!'),
+                            backgroundColor: const Color(0xFF53B175),
+                            duration: const Duration(seconds: 1),
+                          ),
+                        );
+                      }
+                    },
                     icon: const Icon(Icons.add, color: Colors.white, size: 26),
                     padding: EdgeInsets.zero,
                   ),
