@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_project/core/widgets/inputs/custom_search_bar.dart';
-import 'package:my_project/features/explore/presentation/pages/FilterPage.dart';
-import 'package:my_project/features/explore/presentation/widgets/categorywidget.dart';
+import 'package:my_project/features/explore/presentation/pages/filterpage.dart';
 import 'package:my_project/features/explore/presentation/pages/indoor_plant_detail_page.dart';
 import 'package:my_project/features/explore/presentation/widgets/custom_app_bar_widget.dart';
-import 'package:my_project/features/explore/presentation/widgets/search_widget.dart';
 import 'package:my_project/features/explore/presentation/widgets/categories_grid_widget.dart';
 
 class ExplorePage extends StatefulWidget {
@@ -74,45 +72,6 @@ class _ExplorePageState extends State<ExplorePage> {
           ),
           const SizedBox(height: 12),
           // Category Grid
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: GridView.builder(
-                itemCount: categories.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 12,
-                  crossAxisSpacing: 12,
-                  childAspectRatio: 0.85,
-                ),
-                itemBuilder: (context, index) {
-                  final cat = categories[index];
-                  return CategoryWidget(
-                    title: cat['title'],
-                    imageUrl: cat['image'],
-                    backgroundColor: cat['bgColor'],
-                    borderColor: cat['borderColor'],
-                    width: double.infinity,
-                    height: double.infinity,
-                    onTap: () => _handleCategoryTap(cat['title']),
-                  );
-                },
-              ),
-            ),
-            // SearchWidget(
-            //   onSearchChanged: _handleSearch,
-            //   hintText: 'Search Store',
-            // ),
-            // CategoriesGridWidget(
-            //   categories: categories,
-            //   onCategoryTap: _handleCategoryTap,
-            // ),
-          ),
-
-          SearchWidget(
-            onSearchChanged: _handleSearch,
-            hintText: 'Search Store',
-          ),
           CategoriesGridWidget(
             categories: categories,
             onCategoryTap: _handleCategoryTap,
