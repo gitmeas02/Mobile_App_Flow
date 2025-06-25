@@ -5,6 +5,7 @@ class CustomSearchBar extends StatelessWidget {
   final TextEditingController controller;
   final FocusNode? focusNode;
   final VoidCallback onFilterTap;
+  final VoidCallback? onSearchSubmitted;
   final String? hintText;
 
   const CustomSearchBar({
@@ -12,6 +13,7 @@ class CustomSearchBar extends StatelessWidget {
     required this.controller,
     this.focusNode,
     required this.onFilterTap,
+    this.onSearchSubmitted,
     this.hintText,
   }) : super(key: key);
 
@@ -32,8 +34,15 @@ class CustomSearchBar extends StatelessWidget {
             child: TextField(
               controller: controller,
               focusNode: focusNode,
+              style: const TextStyle(color: Colors.black), // Make text black
+              onSubmitted: (value) {
+                if (onSearchSubmitted != null) {
+                  onSearchSubmitted!();
+                }
+              },
               decoration: InputDecoration(
                 hintText: hintText ?? 'Search',
+                hintStyle: const TextStyle(color: Colors.grey),
                 border: InputBorder.none,
               ),
             ),

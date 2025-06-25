@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:my_project/features/cart/data/model/card_model.dart';
+import 'package:my_project/features/cart/data/models/card_model.dart';
 import 'package:my_project/features/plant/data/models/plant.dart';
 
 // Cart provider that manages the list of cart items

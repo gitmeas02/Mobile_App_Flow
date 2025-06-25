@@ -23,6 +23,21 @@ class _ExplorePageState extends State<ExplorePage> {
   ];
 
   final TextEditingController _searchController = TextEditingController();
+  final FocusNode _searchFocusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    // Remove the automatic listener that triggers on every keystroke
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    _searchFocusNode.dispose();
+    super.dispose();
+  }
+
   void _handleCategoryTap(String category) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -45,15 +60,14 @@ class _ExplorePageState extends State<ExplorePage> {
     );
   }
 
-  void _handleSearch(String query) {
-    // Handle search functionality
-    if (query.isNotEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Searching for: $query'),
-          backgroundColor: const Color(0xFF4CAF50),
-        ),
-      );
+  void _handleSearch() {
+    final query = _searchController.text.trim();
+    if (query.isNotEmpty && query.length >= 2) {
+      // Implement actual search logic here
+      print('Searching for: $query');
+
+      // You can add navigation to search results page here
+      // or filter the categories based on the search query
     }
   }
 
@@ -67,7 +81,9 @@ class _ExplorePageState extends State<ExplorePage> {
           // Custom Search Bar with Filter Icon
           CustomSearchBar(
             controller: _searchController,
+            focusNode: _searchFocusNode,
             onFilterTap: _openFilterPage,
+            onSearchSubmitted: _handleSearch,
             hintText: 'Search Store',
           ),
           const SizedBox(height: 12),
