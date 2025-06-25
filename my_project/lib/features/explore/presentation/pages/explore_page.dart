@@ -25,7 +25,6 @@ class _ExplorePageState extends State<ExplorePage> {
   ];
 
   final TextEditingController _searchController = TextEditingController();
-
   void _handleCategoryTap(String category) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -46,6 +45,8 @@ class _ExplorePageState extends State<ExplorePage> {
       backgroundColor: Colors.transparent,
       builder: (context) => const FilterBottomSheet(),
     );
+  }
+
   void _handleSearch(String query) {
     // Handle search functionality
     if (query.isNotEmpty) {
@@ -98,6 +99,16 @@ class _ExplorePageState extends State<ExplorePage> {
                 },
               ),
             ),
+            // SearchWidget(
+            //   onSearchChanged: _handleSearch,
+            //   hintText: 'Search Store',
+            // ),
+            // CategoriesGridWidget(
+            //   categories: categories,
+            //   onCategoryTap: _handleCategoryTap,
+            // ),
+          ),
+
           SearchWidget(
             onSearchChanged: _handleSearch,
             hintText: 'Search Store',
@@ -106,7 +117,6 @@ class _ExplorePageState extends State<ExplorePage> {
             categories: categories,
             onCategoryTap: _handleCategoryTap,
           ),
-          )
         ],
       ),
     );
