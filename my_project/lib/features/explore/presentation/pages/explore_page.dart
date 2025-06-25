@@ -71,11 +71,33 @@ class _ExplorePageState extends State<ExplorePage> {
     }
   }
 
+  void _handleBackPress() {
+    // Check if we can pop the current route
+    if (Navigator.canPop(context)) {
+      Navigator.pop(context);
+    } else {
+      // If we can't pop (we're at the root), you can either:
+      // 1. Do nothing (stay on current tab)
+      // 2. Navigate to home tab
+      // 3. Exit the app
+      // For now, let's do nothing to prevent black screen
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Already at main screen'),
+          duration: Duration(seconds: 1),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF5F7FA),
-      appBar: const CustomAppBarWidget(title: 'Find Products'),
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text('Find Products'),
+      ),
       body: Column(
         children: [
           // Custom Search Bar with Filter Icon
